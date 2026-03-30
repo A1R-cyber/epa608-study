@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPA 608 Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --surface3: #2d333b;
+  --border: #30363d;
+  --border2: #3d444d;
+  --accent: #2f81f7;
+  --accent-dim: #1a3a5c;
+  --cyan: #39d353;
+  --gold: #e3b341;
+  --red: #f85149;
+  --green: #3fb950;
+  --purple: #bc8cff;
+  --orange: #ffa657;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #6e7681;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --r: 10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:16px;line-height:1.6}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;flex-direction:column;padding-bottom:80px}
+.screen.active{display:flex}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--surface);border-top:1px solid var(--border);
+  display:flex;z-index:100;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:10px 4px 8px;gap:4px;
+  color:var(--text3);font-size:10px;letter-spacing:0.03em;
+  transition:color .15s;border:none;background:none;cursor:pointer;
+  font-family:var(--sans);
+}
+.nav-item.active{color:var(--accent)}
+.nav-icon{font-size:20px;line-height:1}
+
+/* ── SHARED HEADER ── */
+.page-header{
+  padding:16px 20px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  position:sticky;top:0;z-index:50;
+}
+.page-header-row{display:flex;align-items:center;gap:12px}
+.back-btn{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:20px;
+  background:var(--surface2);border:1px solid var(--border);
+  flex-shrink:0;
+}
+.back-btn:hover{color:var(--text);border-color:var(--accent)}
+.page-title{font-size:17px;font-weight:600}
+.page-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;
+}
+.card+.card{margin-top:10px}
+
+/* ── SECTION TAGS ── */
+.tag{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;
+}
+.tag-core{background:#1a2a3a;color:#60a5fa}
+.tag-t1{background:#2a1a2a;color:#c084fc}
+.tag-t2{background:#1a2a1a;color:#4ade80}
+.tag-t3{background:#2a2a1a;color:#fbbf24}
+
+/* ── BUTTONS ── */
+.btn{
+  width:100%;padding:14px;border-radius:var(--r);
+  font-size:15px;font-weight:500;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#388bfd}
+.btn-outline{border:1px solid var(--border);color:var(--text);background:var(--surface2)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost{color:var(--text2);font-size:14px}
+.btn-ghost:hover{color:var(--text)}
+
+/* ──────────────────────────────────────────────
+   HOME SCREEN
+────────────────────────────────────────────── */
+.home-hero{
+  padding:28px 20px 20px;
+  background:linear-gradient(180deg,#0d1a2e 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+}
+.home-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:5px 12px;
+  font-family:var(--mono);font-size:10px;color:#60a5fa;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;
+}
+.home-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.home-title{font-size:28px;font-weight:600;line-height:1.2;margin-bottom:6px}
+.home-title em{color:var(--accent);font-style:normal}
+.home-sub{color:var(--text2);font-size:14px}
+.home-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;margin-top:16px;
+}
+.stat-cell{background:var(--surface2);padding:12px 8px;text-align:center}
+.stat-num{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent)}
+.stat-lbl{font-size:10px;color:var(--text3);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+
+.home-sections{padding:16px 16px 0}
+.home-section-title{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 4px}
+.section-row{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);margin-bottom:8px;
+  cursor:pointer;transition:all .15s;
+}
+.section-row:hover{border-color:var(--accent);background:var(--surface2);transform:translateX(2px)}
+.section-icon{
+  width:38px;height:38px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;font-weight:600;
+}
+.si-core{background:#1a2a3a;color:#60a5fa}
+.si-t1{background:#2a1a2a;color:#c084fc}
+.si-t2{background:#1a2a1a;color:#4ade80}
+.si-t3{background:#2a2a1a;color:#fbbf24}
+.section-row-info{flex:1;min-width:0}
+.section-row-title{font-size:14px;font-weight:500}
+.section-row-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.section-row-count{font-family:var(--mono);font-size:11px;color:var(--text3);flex-shrink:0}
+.section-row-arrow{color:var(--text3);font-size:18px;flex-shrink:0;margin-left:4px}
+
+.home-actions{padding:16px}
+.home-actions .btn+.btn{margin-top:8px}
+
+/* ──────────────────────────────────────────────
+   SECTION DETAIL
+────────────────────────────────────────────── */
+.detail-body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.mode-tile{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px 18px;
+  cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:14px;
+}
+.mode-tile:hover{border-color:var(--accent);background:var(--surface2)}
+.mode-tile.featured{border-color:var(--accent-dim);background:#111d2e}
+.mode-tile-icon{font-size:26px;flex-shrink:0}
+.mode-tile-info{flex:1}
+.mode-tile-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.mode-tile-desc{font-size:13px;color:var(--text2);line-height:1.5}
+.mode-tile-arrow{color:var(--text3);font-size:20px;flex-shrink:0}
+
+/* ──────────────────────────────────────────────
+   LEARN MODULES
+────────────────────────────────────────────── */
+#learn-list{padding:0}
+.learn-section-hdr{
+  padding:14px 16px 8px;
+  font-family:var(--mono);font-size:10px;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.module-card{
+  margin:0 12px 8px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px 16px;
+  cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:12px;
+}
+.module-card:hover{border-color:var(--accent);background:var(--surface2)}
+.module-num{
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.module-info{flex:1;min-width:0}
+.module-title{font-size:14px;font-weight:500}
+.module-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.module-arrow{color:var(--text3);font-size:18px}
+
+/* Module reader */
+#module-reader{padding:0}
+.module-content{padding:20px 16px;max-width:680px;margin:0 auto}
+.module-content h2{font-size:20px;font-weight:600;margin:24px 0 10px;color:var(--text);line-height:1.3}
+.module-content h2:first-child{margin-top:0}
+.module-content h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--accent);letter-spacing:.01em}
+.module-content p{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:12px}
+.module-content p strong{color:var(--text);font-weight:600}
+.module-content ul,.module-content ol{padding-left:20px;margin-bottom:12px}
+.module-content li{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:4px}
+.module-content li strong{color:var(--text);font-weight:500}
+.callout{
+  background:var(--surface2);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:12px 14px;margin:14px 0;
+}
+.callout.warn{border-color:var(--gold)}
+.callout.good{border-color:var(--green)}
+.callout.danger{border-color:var(--red)}
+.callout-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-family:var(--mono)}
+.callout.warn .callout-title{color:var(--gold)}
+.callout.good .callout-title{color:var(--green)}
+.callout.danger .callout-title{color:var(--red)}
+.callout .callout-title{color:var(--accent)}
+.callout p{margin:0;font-size:14px;color:var(--text2)}
+.ref-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.ref-table th{background:var(--surface2);color:var(--text2);font-weight:600;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border2);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.ref-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table td:first-child{color:var(--text);font-weight:500}
+.module-nav-footer{display:flex;gap:10px;padding:16px;border-top:1px solid var(--border);background:var(--surface);position:sticky;bottom:0}
+
+/* ──────────────────────────────────────────────
+   VOCABULARY
+────────────────────────────────────────────── */
+.vocab-search-bar{padding:12px 16px;position:sticky;top:57px;background:var(--bg);z-index:40;border-bottom:1px solid var(--border)}
+.vocab-search{
+  width:100%;padding:10px 14px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:var(--sans);font-size:14px;
+  outline:none;
+}
+.vocab-search:focus{border-color:var(--accent)}
+.vocab-search::placeholder{color:var(--text3)}
+.vocab-filter-row{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;border-bottom:1px solid var(--border)}
+.vocab-filter-row::-webkit-scrollbar{display:none}
+.filter-pill{
+  padding:5px 12px;border-radius:20px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text2);font-size:12px;white-space:nowrap;
+  cursor:pointer;transition:all .15s;flex-shrink:0;
+}
+.filter-pill.active{border-color:var(--accent);background:var(--accent-dim);color:var(--accent)}
+.vocab-list{padding:8px 12px}
+.vocab-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px 16px;margin-bottom:8px;
+  cursor:pointer;transition:all .15s;
+}
+.vocab-item:hover{border-color:var(--border2);background:var(--surface2)}
+.vocab-item.open{border-color:var(--accent)}
+.vocab-term{font-size:15px;font-weight:600;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.vocab-tag{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:10px}
+.vocab-def{font-size:14px;color:var(--text2);line-height:1.65;display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.vocab-item.open .vocab-def{display:block}
+.vocab-chevron{color:var(--text3);transition:transform .2s;font-size:14px}
+.vocab-item.open .vocab-chevron{transform:rotate(180deg)}
+.vocab-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
+
+/* ──────────────────────────────────────────────
+   RESOURCES
+────────────────────────────────────────────── */
+.resources-body{padding:12px}
+.res-section-title{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin:16px 4px 8px}
+.res-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);margin-bottom:8px;overflow:hidden;
+}
+.res-card-header{
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:background .15s;
+}
+.res-card-header:hover{background:var(--surface2)}
+.res-card-icon{font-size:22px;flex-shrink:0}
+.res-card-title{font-size:14px;font-weight:500;flex:1}
+.res-card-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.res-card.open .res-card-body{display:block}
+.res-card-body .ref-table{margin-top:12px}
+.tip-box{
+  background:var(--surface2);border-radius:8px;padding:12px 14px;
+  margin:8px 0;font-size:13px;color:var(--text2);line-height:1.6;
+}
+.tip-box strong{color:var(--text)}
+
+/* ──────────────────────────────────────────────
+   FLASHCARDS
+────────────────────────────────────────────── */
+.fc-header{
+  padding:12px 16px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);background:var(--surface);
+  position:sticky;top:0;z-index:10;
+}
+.fc-progress-wrap{flex:1}
+.fc-counter{font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:5px}
+.progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.fc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px}
+.flashcard-scene{width:100%;max-width:500px;perspective:1200px;cursor:pointer}
+.flashcard-inner{
+  position:relative;width:100%;
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);
+  border-radius:14px;
+}
+.flashcard-inner.flipped{transform:rotateY(180deg)}
+.card-face{
+  width:100%;backface-visibility:hidden;
+  border-radius:14px;padding:28px 24px;min-height:220px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--surface);border:1px solid var(--border);
+}
+.card-face.back{
+  transform:rotateY(180deg);position:absolute;top:0;left:0;
+  background:var(--surface2);border-color:var(--accent-dim);
+}
+.card-side-label{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;
+  padding:3px 9px;border-radius:10px;display:inline-block;width:fit-content;
+}
+.label-q{background:var(--surface2);color:var(--text3)}
+.label-a{background:#1a3a1a;color:var(--green)}
+.card-face.back .label-a{background:#1a3a1a}
+.card-text{font-size:16px;line-height:1.65;margin-top:14px;flex:1;color:var(--text)}
+.card-hint{font-size:12px;color:var(--text3);text-align:center;margin-top:14px}
+.fc-explanation{
+  font-size:13px;color:var(--text2);line-height:1.6;
+  margin-top:12px;padding-top:12px;border-top:1px solid var(--border);
+}
+.fc-controls{
+  padding:14px 16px;display:flex;gap:8px;
+  background:var(--surface);border-top:1px solid var(--border);
+}
+.fc-btn{
+  flex:1;padding:12px 8px;border-radius:9px;
+  border:1px solid var(--border);background:var(--surface2);
+  color:var(--text);font-family:var(--sans);font-size:13px;font-weight:500;
+  transition:all .15s;
+}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.fc-btn.primary:hover{background:#388bfd}
+
+/* ──────────────────────────────────────────────
+   EXAM SETUP
+────────────────────────────────────────────── */
+.setup-body{flex:1;padding:16px;overflow-y:auto}
+.setup-group{margin-bottom:24px}
+.setup-group-label{font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt-btn{
+  padding:12px 6px;border-radius:9px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);
+  font-size:14px;font-weight:500;text-align:center;transition:all .15s;
+}
+.opt-btn.on{border-color:var(--accent);background:var(--accent-dim);color:#60a5fa}
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:9px;margin-bottom:8px;cursor:pointer;transition:all .15s;
+}
+.toggle-row.on{border-color:var(--accent-dim)}
+.toggle-info{flex:1}
+.toggle-lbl{font-size:14px;font-weight:500}
+.toggle-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.toggle-sw{
+  width:36px;height:20px;border-radius:10px;background:var(--border2);
+  position:relative;flex-shrink:0;margin-left:12px;transition:background .2s;
+}
+.toggle-row.on .toggle-sw{background:var(--accent)}
+.toggle-sw::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:16px;height:16px;border-radius:50%;background:#fff;
+  transition:transform .2s;
+}
+.toggle-row.on .toggle-sw::after{transform:translateX(16px)}
+.setup-footer{padding:12px 16px 16px;border-top:1px solid var(--border)}
+
+/* ──────────────────────────────────────────────
+   EXAM
+────────────────────────────────────────────── */
+.exam-hdr{
+  padding:10px 16px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);background:var(--surface);
+  position:sticky;top:0;z-index:10;
+}
+.exam-timer{
+  font-family:var(--mono);font-size:15px;font-weight:600;
+  color:var(--gold);background:var(--surface2);
+  padding:5px 12px;border-radius:7px;border:1px solid var(--border);flex-shrink:0;
+}
+.exam-timer.urgent{color:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
+.exam-body{flex:1;padding:20px 16px;overflow-y:auto}
+.q-num-label{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.q-section-tag{display:inline-block;margin-bottom:12px}
+.q-text{font-size:17px;font-weight:500;line-height:1.6;margin-bottom:20px;color:var(--text)}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{
+  padding:13px 14px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:11px;
+}
+.opt:hover{border-color:var(--border2);background:var(--surface2)}
+.opt.selected{border-color:var(--accent);background:var(--accent-dim)}
+.opt.correct{border-color:var(--green);background:#0d2518}
+.opt.wrong{border-color:var(--red);background:#2a0e0e}
+.opt-letter{
+  width:24px;height:24px;border-radius:6px;flex-shrink:0;
+  background:var(--surface2);color:var(--text3);
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.opt.selected .opt-letter{background:var(--accent);color:#fff}
+.opt.correct .opt-letter{background:var(--green);color:#fff}
+.opt.wrong .opt-letter{background:var(--red);color:#fff}
+.opt-text{font-size:15px;line-height:1.5;flex:1;color:var(--text2)}
+.opt.selected .opt-text,.opt.correct .opt-text{color:var(--text)}
+.explanation{
+  margin-top:14px;padding:12px 14px;
+  background:var(--surface2);border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;font-size:13px;color:var(--text2);line-height:1.6;
+  display:none;
+}
+.explanation.show{display:block}
+.exam-footer{
+  padding:12px 16px;border-top:1px solid var(--border);
+  display:flex;gap:8px;background:var(--surface);
+  position:sticky;bottom:0;
+}
+.ex-nav-btn{
+  flex:1;padding:13px;border-radius:9px;
+  border:1px solid var(--border);background:var(--surface2);
+  color:var(--text);font-family:var(--sans);font-size:14px;font-weight:500;
+  transition:all .15s;
+}
+.ex-nav-btn:hover{background:var(--surface3)}
+.ex-nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;flex:2}
+.ex-nav-btn.primary:hover{background:#388bfd}
+.ex-nav-btn:disabled{opacity:.35;cursor:not-allowed}
+
+/* ──────────────────────────────────────────────
+   RESULTS
+────────────────────────────────────────────── */
+.results-hero{
+  padding:28px 20px 20px;text-align:center;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#0d1a2e 0%,var(--bg) 100%);
+}
+.score-ring{
+  width:100px;height:100px;border-radius:50%;
+  margin:0 auto 14px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:3px solid var(--accent);background:var(--surface2);
+}
+.score-ring.pass{border-color:var(--green)}
+.score-ring.fail{border-color:var(--red)}
+.score-pct{font-family:var(--mono);font-size:26px;font-weight:600}
+.score-ring.pass .score-pct{color:var(--green)}
+.score-ring.fail .score-pct{color:var(--red)}
+.score-lbl-sm{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.result-verdict{font-size:20px;font-weight:600;margin-bottom:6px}
+.pass-chip{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:500}
+.pass-chip.pass{background:#0d2518;color:var(--green);border:1px solid var(--green)}
+.pass-chip.fail{background:#2a0e0e;color:var(--red);border:1px solid var(--red)}
+.result-meta{font-size:13px;color:var(--text3);margin-top:8px}
+.results-body{flex:1;padding:16px;overflow-y:auto}
+.res-section-hdr{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.breakdown-row{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:9px;padding:12px 14px;margin-bottom:8px;
+}
+.bd-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.bd-name{font-size:13px;font-weight:500}
+.bd-score{font-family:var(--mono);font-size:13px;font-weight:600}
+.bd-bar-bg{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.bd-bar{height:100%;border-radius:2px}
+.missed-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:9px;padding:13px 14px;margin-bottom:8px;
+}
+.missed-q{font-size:14px;line-height:1.5;margin-bottom:8px;color:var(--text)}
+.missed-yours{font-size:13px;color:var(--red);margin-bottom:4px}
+.missed-correct{font-size:13px;color:var(--green)}
+.results-footer{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;max-width:380px;width:100%}
+.modal-title{font-size:17px;font-weight:600;margin-bottom:8px}
+.modal-body{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.modal-actions{display:flex;gap:8px}
+.modal-btn{flex:1;padding:12px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--sans);font-size:14px;font-weight:500}
+.modal-btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HOME
+═══════════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="home-badge"><span class="home-badge-dot"></span>EPA Section 608</div>
+    <div class="home-title">HVAC Refrigerant<br><em>Certification</em></div>
+    <div class="home-sub">Study guide · Practice exams · Reference materials</div>
+    <div class="home-stats">
+      <div class="stat-cell"><div class="stat-num" id="stat-q">—</div><div class="stat-lbl">Questions</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-terms">—</div><div class="stat-lbl">Vocab Terms</div></div>
+      <div class="stat-cell"><div class="stat-num">70%</div><div class="stat-lbl">To Pass</div></div>
+    </div>
+  </div>
+
+  <div class="home-sections">
+    <div class="home-section-title">Study by section</div>
+    <div class="section-row" onclick="openSection(0)">
+      <div class="section-icon si-core">CORE</div>
+      <div class="section-row-info">
+        <div class="section-row-title">Core — All Technicians</div>
+        <div class="section-row-sub">Ozone, Clean Air Act, recovery, refrigerant types</div>
+      </div>
+      <div class="section-row-count" id="cnt-0"></div>
+      <div class="section-row-arrow">›</div>
+    </div>
+    <div class="section-row" onclick="openSection(1)">
+      <div class="section-icon si-t1">T-I</div>
+      <div class="section-row-info">
+        <div class="section-row-title">Type I — Small Appliances</div>
+        <div class="section-row-sub">≤5 lbs, hermetic systems, R-12, R-134a</div>
+      </div>
+      <div class="section-row-count" id="cnt-1"></div>
+      <div class="section-row-arrow">›</div>
+    </div>
+    <div class="section-row" onclick="openSection(2)">
+      <div class="section-icon si-t2">T-II</div>
+      <div class="section-row-info">
+        <div class="section-row-title">Type II — High-Pressure Systems</div>
+        <div class="section-row-sub">R-22, R-410A, residential &amp; commercial A/C</div>
+      </div>
+      <div class="section-row-count" id="cnt-2"></div>
+      <div class="section-row-arrow">›</div>
+    </div>
+    <div class="section-row" onclick="openSection(3)">
+      <div class="section-icon si-t3">T-III</div>
+      <div class="section-row-info">
+        <div class="section-row-title">Type III — Low-Pressure Systems</div>
+        <div class="section-row-sub">Chillers, R-11, R-123, purge units</div>
+      </div>
+      <div class="section-row-count" id="cnt-3"></div>
+      <div class="section-row-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="home-actions">
+    <button class="btn btn-primary" onclick="startSimulatedExam()">📋 Simulate Real Exam — 100 Qs</button>
+    <button class="btn btn-outline" onclick="showExamSetup()">⚙️ Custom Practice Exam</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION DETAIL
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-section">
+  <div class="page-header">
+    <div class="page-header-row">
+      <button class="back-btn" onclick="showNav('home')">‹</button>
+      <div>
+        <div class="page-title" id="sec-title"></div>
+        <div class="page-sub" id="sec-sub"></div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-body">
+    <div class="mode-tile featured" onclick="goLearnSection()">
+      <div class="mode-tile-icon">📖</div>
+      <div class="mode-tile-info">
+        <div class="mode-tile-title">Study Module</div>
+        <div class="mode-tile-desc">Plain-English explanations of everything on the exam for this section. Start here.</div>
+      </div>
+      <div class="mode-tile-arrow">›</div>
+    </div>
+    <div class="mode-tile" onclick="startFlashcards()">
+      <div class="mode-tile-icon">🃏</div>
+      <div class="mode-tile-info">
+        <div class="mode-tile-title">Flashcards</div>
+        <div class="mode-tile-desc">Flip through questions with answers. Shuffle for random order.</div>
+      </div>
+      <div class="mode-tile-arrow">›</div>
+    </div>
+    <div class="mode-tile" onclick="startSectionExam()">
+      <div class="mode-tile-icon">⏱</div>
+      <div class="mode-tile-info">
+        <div class="mode-tile-title">Section Practice Exam</div>
+        <div class="mode-tile-desc">25 timed questions from this section only. Scored with review.</div>
+      </div>
+      <div class="mode-tile-arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LEARN — MODULE LIST
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-learn">
+  <div class="page-header">
+    <div class="page-header-row">
+      <button class="back-btn" onclick="showNav('learn')">‹</button>
+      <div>
+        <div class="page-title">Study Modules</div>
+        <div class="page-sub">Read before flashcards and exams</div>
+      </div>
+    </div>
+  </div>
+  <div id="learn-list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LEARN — MODULE READER
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-module">
+  <div class="page-header">
+    <div class="page-header-row">
+      <button class="back-btn" onclick="showScreen('screen-learn')">‹</button>
+      <div>
+        <div class="page-title" id="module-title-hdr"></div>
+        <div class="page-sub" id="module-section-hdr"></div>
+      </div>
+    </div>
+  </div>
+  <div id="module-reader" class="module-content"></div>
+  <div class="module-nav-footer">
+    <button class="btn btn-outline" id="mod-prev-btn" onclick="prevModule()">← Prev</button>
+    <button class="btn btn-primary" id="mod-next-btn" onclick="nextModule()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VOCAB
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-vocab">
+  <div class="page-header">
+    <div class="page-header-row">
+      <div><div class="page-title">Vocabulary</div><div class="page-sub" id="vocab-count-lbl"></div></div>
+    </div>
+  </div>
+  <div class="vocab-search-bar">
+    <input class="vocab-search" type="search" placeholder="Search terms…" id="vocab-search-input" oninput="filterVocab()">
+  </div>
+  <div class="vocab-filter-row" id="vocab-filters">
+    <button class="filter-pill active" onclick="setVocabFilter('all',this)">All</button>
+    <button class="filter-pill" onclick="setVocabFilter('core',this)">Core</button>
+    <button class="filter-pill" onclick="setVocabFilter('t1',this)">Type I</button>
+    <button class="filter-pill" onclick="setVocabFilter('t2',this)">Type II</button>
+    <button class="filter-pill" onclick="setVocabFilter('t3',this)">Type III</button>
+  </div>
+  <div class="vocab-list" id="vocab-list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RESOURCES
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-resources">
+  <div class="page-header">
+    <div class="page-header-row">
+      <div><div class="page-title">Reference Tables</div><div class="page-sub">Quick lookup during study</div></div>
+    </div>
+  </div>
+  <div class="resources-body" id="resources-body"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FLASHCARDS
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-flashcard">
+  <div class="fc-header">
+    <button class="back-btn" onclick="confirmLeave('section')">‹</button>
+    <div class="fc-progress-wrap">
+      <div class="fc-counter"><span id="fc-cur">1</span> / <span id="fc-tot">1</span> · <span id="fc-sec-name"></span></div>
+      <div class="progress-bar"><div class="progress-fill" id="fc-bar"></div></div>
+    </div>
+  </div>
+  <div class="fc-body">
+    <div class="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard-inner" id="fc-inner">
+        <div class="card-face front">
+          <div>
+            <span class="card-side-label label-q">Question</span>
+            <div class="card-text" id="fc-q"></div>
+          </div>
+          <div class="card-hint">Tap card to reveal answer</div>
+        </div>
+        <div class="card-face back">
+          <div>
+            <span class="card-side-label label-a">Answer</span>
+            <div class="card-text" id="fc-a"></div>
+            <div class="fc-explanation" id="fc-exp"></div>
+          </div>
+          <div class="card-hint">Tap to flip back</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" id="fc-prev" onclick="fcPrev()">← Prev</button>
+    <button class="fc-btn" onclick="fcShuffle()">⇄ Shuffle</button>
+    <button class="fc-btn primary" id="fc-next" onclick="fcNext()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXAM SETUP
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-exam-setup">
+  <div class="page-header">
+    <div class="page-header-row">
+      <button class="back-btn" onclick="showNav('home')">‹</button>
+      <div><div class="page-title">Custom Exam</div><div class="page-sub">Configure your practice session</div></div>
+    </div>
+  </div>
+  <div class="setup-body">
+    <div class="setup-group">
+      <div class="setup-group-label">Number of questions</div>
+      <div class="option-grid">
+        <button class="opt-btn on" onclick="selQCount(this,25)">25</button>
+        <button class="opt-btn" onclick="selQCount(this,50)">50</button>
+        <button class="opt-btn" onclick="selQCount(this,100)">100</button>
+      </div>
+    </div>
+    <div class="setup-group">
+      <div class="setup-group-label">Sections to include</div>
+      <div id="setup-toggles">
+        <div class="toggle-row on" data-sec="0" onclick="toggleSec(this)">
+          <div class="toggle-info"><div class="toggle-lbl">Core — All Technicians</div><div class="toggle-sub">Ozone, regulations, recovery, refrigerant types</div></div>
+          <div class="toggle-sw"></div>
+        </div>
+        <div class="toggle-row on" data-sec="1" onclick="toggleSec(this)">
+          <div class="toggle-info"><div class="toggle-lbl">Type I — Small Appliances</div><div class="toggle-sub">≤5 lbs, hermetic systems</div></div>
+          <div class="toggle-sw"></div>
+        </div>
+        <div class="toggle-row on" data-sec="2" onclick="toggleSec(this)">
+          <div class="toggle-info"><div class="toggle-lbl">Type II — High-Pressure</div><div class="toggle-sub">R-22, R-410A, residential &amp; commercial</div></div>
+          <div class="toggle-sw"></div>
+        </div>
+        <div class="toggle-row on" data-sec="3" onclick="toggleSec(this)">
+          <div class="toggle-info"><div class="toggle-lbl">Type III — Low-Pressure</div><div class="toggle-sub">Chillers, R-11, R-123</div></div>
+          <div class="toggle-sw"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="setup-footer">
+    <button class="btn btn-primary" onclick="launchCustomExam()">Start Exam</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXAM
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-exam">
+  <div class="exam-hdr">
+    <button class="back-btn" onclick="confirmLeave('home')">‹</button>
+    <div class="fc-progress-wrap">
+      <div class="fc-counter">Q <span id="ex-cur">1</span> of <span id="ex-tot">25</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="ex-bar"></div></div>
+    </div>
+    <div class="exam-timer" id="ex-timer">90:00</div>
+  </div>
+  <div class="exam-body">
+    <div class="q-num-label" id="ex-qnum"></div>
+    <span class="q-section-tag tag" id="ex-sec-tag"></span>
+    <div class="q-text" id="ex-q"></div>
+    <div class="options" id="ex-opts"></div>
+    <div class="explanation" id="ex-exp"></div>
+  </div>
+  <div class="exam-footer">
+    <button class="ex-nav-btn" id="ex-prev-btn" onclick="exPrev()">← Prev</button>
+    <button class="ex-nav-btn primary" id="ex-next-btn" onclick="exNext()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RESULTS
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-results">
+  <div class="results-hero">
+    <div class="score-ring" id="res-ring">
+      <div class="score-pct" id="res-pct">—</div>
+      <div class="score-lbl-sm">score</div>
+    </div>
+    <div class="result-verdict" id="res-verdict"></div>
+    <span class="pass-chip" id="res-chip"></span>
+    <div class="result-meta" id="res-meta"></div>
+  </div>
+  <div class="results-body">
+    <div class="res-section-hdr">Score by section</div>
+    <div id="res-breakdown"></div>
+    <div class="res-section-hdr" id="res-missed-hdr" style="margin-top:20px">Missed questions</div>
+    <div id="res-missed"></div>
+  </div>
+  <div class="results-footer">
+    <button class="btn btn-primary" onclick="retakeExam()">Retake Exam</button>
+    <button class="btn btn-outline" onclick="showNav('home')">Back to Home</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     BOTTOM NAV
+═══════════════════════════════════════════ -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="showNav('home')">
+    <span class="nav-icon">⌂</span><span>Home</span>
+  </button>
+  <button class="nav-item" id="nav-learn" onclick="showNav('learn')">
+    <span class="nav-icon">📖</span><span>Learn</span>
+  </button>
+  <button class="nav-item" id="nav-vocab" onclick="showNav('vocab')">
+    <span class="nav-icon">📝</span><span>Vocab</span>
+  </button>
+  <button class="nav-item" id="nav-resources" onclick="showNav('resources')">
+    <span class="nav-icon">📊</span><span>Tables</span>
+  </button>
+</nav>
+
+<!-- LEAVE MODAL -->
+<div class="modal-overlay" id="modal-leave">
+  <div class="modal-box">
+    <div class="modal-title">Leave this session?</div>
+    <div class="modal-body">Your progress on this session will be lost.</div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal()">Keep Going</button>
+      <button class="modal-btn danger" onclick="doLeave()">Leave</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STUDY MODULES — plain-English lesson content
+// ═══════════════════════════════════════════════════════════
+const MODULES = [
+  // ── CORE ─────────────────────────────────────────────────
+  {
+    id:'core-1', section:0, title:'The Clean Air Act & Section 608',
+    sub:'Why this certification exists',
+    content:`
+<h2>Why Does This Certification Exist?</h2>
+<p>The <strong>Clean Air Act (CAA)</strong> is a federal law that gives the EPA authority to protect air quality. <strong>Section 608</strong> specifically deals with refrigerants — chemicals used in air conditioners and refrigerators that, when released, can damage the ozone layer and warm the planet.</p>
+<p>Before 1990, technicians routinely vented refrigerant into the air when servicing equipment. Section 608 made that illegal and required that anyone who works with refrigerants be trained and certified.</p>
+<div class="callout warn"><div class="callout-title">⚠ Key Law</div><p><strong>Knowingly venting</strong> refrigerant into the atmosphere is a federal violation. Civil penalties can reach <strong>$44,539 per day per violation</strong>. Criminal penalties and jail time are also possible.</p></div>
+<h3>Who Must Be Certified?</h3>
+<p>Anyone who <strong>maintains, services, repairs, or disposes</strong> of appliances containing regulated refrigerants must be EPA 608 certified. You also need certification to <strong>purchase refrigerant in containers larger than 2 lbs</strong>.</p>
+<h3>Four Certification Types</h3>
+<table class="ref-table"><thead><tr><th>Type</th><th>Equipment Covered</th></tr></thead><tbody>
+<tr><td>Core</td><td>Required for everyone — must pass Core plus one Type to get any cert</td></tr>
+<tr><td>Type I</td><td>Small appliances — factory-sealed systems with ≤5 lbs of refrigerant</td></tr>
+<tr><td>Type II</td><td>High-pressure systems — R-22, R-410A, most residential/commercial A/C</td></tr>
+<tr><td>Type III</td><td>Low-pressure systems — centrifugal chillers using R-11, R-123</td></tr>
+<tr><td>Universal</td><td>Pass all four sections — certified for all equipment types</td></tr>
+</tbody></table>
+<div class="callout good"><div class="callout-title">✓ Exam Tip</div><p>You must pass the Core section AND at least one type section (I, II, or III) to receive any certification. Core alone is not a certification.</p></div>
+<h3>EPA Enforcement</h3>
+<p>The EPA offers <strong>up to $10,000</strong> to persons who provide information leading to a penalty or conviction for illegal refrigerant venting. Certifications never expire, but technicians are expected to stay current with changing regulations.</p>
+    `
+  },
+  {
+    id:'core-2', section:0, title:'The Ozone Layer & Refrigerant Harm',
+    sub:'How refrigerants damage the atmosphere',
+    content:`
+<h2>The Ozone Layer</h2>
+<p>The <strong>stratospheric ozone layer</strong> sits roughly <strong>11 to 21 miles above Earth's surface</strong>. It acts as a shield, absorbing most of the sun's harmful UV-B radiation. Without it, UV exposure causes skin cancer, cataracts, crop damage, and harm to marine ecosystems.</p>
+<h3>How CFCs Destroy Ozone</h3>
+<p>When CFC and HCFC refrigerants are released into the air, they slowly drift up into the stratosphere. UV radiation there breaks apart the molecules, releasing <strong>free chlorine atoms</strong>. Each chlorine atom can destroy up to <strong>100,000 ozone molecules</strong> in a chain reaction — then start over again.</p>
+<div class="callout danger"><div class="callout-title">⚡ Chain Reaction</div><p>Chlorine + Ozone → Chlorine Monoxide + Oxygen. Then Chlorine Monoxide + another Ozone molecule → 2 Oxygen molecules + free Chlorine atom (starts over). One Cl atom, thousands of ozone molecules destroyed.</p></div>
+<h3>Ozone Depletion Potential (ODP)</h3>
+<p><strong>ODP</strong> measures how much a substance damages the ozone layer, compared to CFC-11 (which is the baseline at 1.0). Lower is better.</p>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Type</th><th>ODP</th><th>Status</th></tr></thead><tbody>
+<tr><td>R-11</td><td>CFC</td><td>1.0</td><td>Banned — production ended</td></tr>
+<tr><td>R-12</td><td>CFC</td><td>1.0</td><td>Banned — production ended</td></tr>
+<tr><td>R-22</td><td>HCFC</td><td>0.05</td><td>Phased out — no new production after 2020</td></tr>
+<tr><td>R-123</td><td>HCFC</td><td>0.02</td><td>Being phased down</td></tr>
+<tr><td>R-134a</td><td>HFC</td><td>0.0</td><td>Active — zero ODP</td></tr>
+<tr><td>R-410A</td><td>HFC</td><td>0.0</td><td>Active — zero ODP</td></tr>
+<tr><td>R-717 (Ammonia)</td><td>Natural</td><td>0.0</td><td>Active — natural refrigerant</td></tr>
+</tbody></table>
+<h3>Global Warming Potential (GWP)</h3>
+<p><strong>GWP</strong> measures how much heat a gas traps over 100 years, compared to CO2 (baseline = 1). HFCs solved the ozone problem but are potent greenhouse gases.</p>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>GWP</th></tr></thead><tbody>
+<tr><td>R-22</td><td>1,810</td></tr>
+<tr><td>R-134a</td><td>1,430</td></tr>
+<tr><td>R-410A</td><td>2,088</td></tr>
+<tr><td>CO2 (R-744)</td><td>1</td></tr>
+<tr><td>Ammonia (R-717)</td><td>0</td></tr>
+</tbody></table>
+<h3>The Montreal Protocol (1989)</h3>
+<p>An international treaty that took effect in <strong>1989</strong> (signed 1987) to phase out ozone-depleting substances. It phased out CFCs first, then HCFCs. The <strong>Kigali Amendment (2016)</strong> extended it to phase down HFCs due to their high GWP.</p>
+    `
+  },
+  {
+    id:'core-3', section:0, title:'Refrigerant Types & Identification',
+    sub:'CFCs, HCFCs, HFCs, naturals, and blends',
+    content:`
+<h2>Refrigerant Classification</h2>
+<p>Refrigerants are grouped by their chemical composition. The type tells you a lot about their environmental impact, pressure range, and required oil.</p>
+<h3>CFCs — Chlorofluorocarbons</h3>
+<p>The original synthetic refrigerants. Contain chlorine, fluorine, and carbon. <strong>Highest ODP, banned from production.</strong> Examples: R-11, R-12, R-113, R-500, R-502.</p>
+<h3>HCFCs — Hydrochlorofluorocarbons</h3>
+<p>Transitional refrigerants. Added hydrogen, which causes them to break down before reaching the stratosphere — lower ODP than CFCs but not zero. <strong>Being phased out.</strong> Examples: R-22, R-123, R-124.</p>
+<h3>HFCs — Hydrofluorocarbons</h3>
+<p>Contain no chlorine — <strong>zero ODP</strong>. Currently the most common class in new equipment. High GWP is the ongoing concern. Examples: R-134a, R-410A, R-404A, R-407C, R-32.</p>
+<h3>Natural Refrigerants</h3>
+<p>Substances found in nature. Zero ODP and very low or zero GWP. Examples: Ammonia (R-717), CO2 (R-744), Propane (R-290).</p>
+<div class="callout warn"><div class="callout-title">⚠ Ammonia Safety</div><p>Ammonia is <strong>toxic and flammable</strong>. IDLH (Immediately Dangerous to Life) = 300 ppm. Requires special training, PPE, and ventilation. Never mix ammonia systems with other refrigerant systems.</p></div>
+<h3>Refrigerant Blends</h3>
+<p><strong>Azeotropic blends</strong> behave like single-component refrigerants — they boil at one fixed temperature and can't be separated by distillation. Examples: R-500, R-502.</p>
+<p><strong>Zeotropic blends</strong> have components with different boiling points, causing <strong>temperature glide</strong> — the refrigerant changes temperature as it changes phase. Examples: R-407C, R-404A, R-410A. <strong>Must be charged as vapor only</strong> to avoid fractionation (changing the blend ratio).</p>
+<h3>Cylinder Color Codes (know these for the exam)</h3>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Cylinder Color</th></tr></thead><tbody>
+<tr><td>R-11</td><td>Orange</td></tr>
+<tr><td>R-12</td><td>White</td></tr>
+<tr><td>R-22</td><td>Light green (green)</td></tr>
+<tr><td>R-123</td><td>Light blue-gray</td></tr>
+<tr><td>R-134a</td><td>Light blue</td></tr>
+<tr><td>R-404A</td><td>Orange</td></tr>
+<tr><td>R-410A</td><td>Pink / Rose</td></tr>
+<tr><td>R-502</td><td>Light purple / orchid</td></tr>
+</tbody></table>
+    `
+  },
+  {
+    id:'core-4', section:0, title:'Recovery, Recycling & Reclamation',
+    sub:'The three Rs of refrigerant handling',
+    content:`
+<h2>The Three Rs</h2>
+<p>The EPA distinguishes three ways of handling used refrigerant. Understanding the differences is critical for the exam.</p>
+<h3>Recovery</h3>
+<p>Removing refrigerant from a system and storing it in an approved cylinder — <strong>without testing or processing</strong>. Recovery is required before opening any refrigerant system or disposing of any equipment. It doesn't matter how much refrigerant is in the system — it must all be recovered.</p>
+<h3>Recycling</h3>
+<p>Cleaning recovered refrigerant using oil separation and filter-driers to reduce moisture, acidity, and particles — <strong>for reuse on the same job site</strong>, not for resale. Recycled refrigerant does not have to meet ARI 700 standards. Only EPA-approved recycling equipment may be used.</p>
+<h3>Reclamation</h3>
+<p>Processing refrigerant to meet <strong>ARI Standard 700</strong> purity — the same quality as virgin (new) refrigerant. Only EPA-certified reclaimers can reclaim. Reclaimed refrigerant can be resold. If a reclaimer receives <strong>mixed refrigerants</strong>, they may: refuse to process, destroy it and charge a fee, or return it to the owner and charge a fee.</p>
+<div class="callout good"><div class="callout-title">✓ Memory Hook</div><p>Recovery = remove it. Recycling = clean it for local reuse. Reclamation = purify it to like-new standards for resale.</p></div>
+<h3>Recovery Equipment Requirements</h3>
+<p>All recovery equipment must be <strong>certified by an EPA-approved testing organization</strong> (such as UL or ETL). It must use <strong>low-loss fittings</strong> — automatic shut-off valves that prevent refrigerant release when disconnecting hoses.</p>
+<h3>Required Evacuation Levels — High-Pressure Systems</h3>
+<p>Before opening a high-pressure system, you must achieve these vacuum levels:</p>
+<table class="ref-table"><thead><tr><th>System size</th><th>Manufactured before 11/15/93</th><th>Manufactured after 11/15/93</th></tr></thead><tbody>
+<tr><td>Less than 200 lbs</td><td>4 in Hg</td><td>10 in Hg</td></tr>
+<tr><td>200 lbs or more</td><td>4 in Hg</td><td>25 in Hg</td></tr>
+<tr><td>Very high pressure</td><td>0 in Hg (atmospheric)</td><td>0 in Hg (atmospheric)</td></tr>
+</tbody></table>
+<p>For <strong>low-pressure systems (Type III)</strong>, you must reach <strong>25 mm Hg absolute pressure</strong> (approximately 29 in Hg vacuum) before opening.</p>
+<h3>Recovery Cylinder Rules</h3>
+<ul>
+<li>Must be <strong>DOT-certified</strong> (typically DOT-4BA or DOT-4BW)</li>
+<li>Never fill beyond <strong>80% of capacity by weight</strong></li>
+<li>Never mix different refrigerants in the same cylinder</li>
+<li>Store cylinders <strong>upright, valve end up</strong></li>
+<li>Cylinders should have <strong>proper DOT hazmat labels</strong> when shipped</li>
+</ul>
+<div class="callout danger"><div class="callout-title">✗ Never Do This</div><p>Never mix refrigerants in a recovery cylinder. The resulting unknown blend cannot be reclaimed or reused and must be destroyed at significant cost.</p></div>
+    `
+  },
+  {
+    id:'core-5', section:0, title:'Leak Detection & Repair Requirements',
+    sub:'Finding leaks and staying compliant',
+    content:`
+<h2>Leak Detection</h2>
+<p>Approved leak detection methods include:</p>
+<ul>
+<li><strong>Electronic detectors</strong> — heated diode, infrared, or ultrasonic (most common for HFCs)</li>
+<li><strong>UV fluorescent dye</strong> — added to system, viewed under UV light</li>
+<li><strong>Soap bubbles</strong> — simple, effective at accessible joints</li>
+<li><strong>Halide torch</strong> — open flame that changes color; works for CFCs/HCFCs but not HFCs; rarely used now</li>
+</ul>
+<div class="callout warn"><div class="callout-title">⚠ Never Do This</div><p>Never use oxygen to pressurize a system for leak testing — oil and oxygen mixtures can explode. Use <strong>dry nitrogen</strong> only for pressure testing.</p></div>
+<h3>EPA Leak Rate Thresholds (50+ lb systems)</h3>
+<p>For systems with <strong>50 lbs or more</strong> of refrigerant, mandatory repair is triggered when the annual leak rate exceeds:</p>
+<table class="ref-table"><thead><tr><th>Equipment type</th><th>Leak rate threshold</th></tr></thead><tbody>
+<tr><td>Comfort cooling (commercial A/C)</td><td>15% per year</td></tr>
+<tr><td>Commercial / industrial process refrigeration</td><td>35% per year</td></tr>
+</tbody></table>
+<p><strong>Annual leak rate</strong> = (lbs added per year ÷ total nameplate charge) × 100%</p>
+<h3>Repair Timeframes</h3>
+<p>Once a leak is discovered that exceeds the threshold:</p>
+<ul>
+<li>Repair within <strong>30 days</strong> of discovery</li>
+<li>If parts must be ordered: one <strong>30-day extension</strong> can be granted (60 days total)</li>
+<li>If repair is not feasible: the equipment must be <strong>retired</strong> (refrigerant recovered and disposed of)</li>
+</ul>
+<h3>Record Keeping</h3>
+<p>For systems with <strong>50 lbs or more</strong> of refrigerant, you must keep records for <strong>at least 3 years</strong> of:</p>
+<ul>
+<li>Date and amount of refrigerant added</li>
+<li>Any leaks found and when repaired</li>
+</ul>
+<p>Records must be available for EPA inspection on request.</p>
+<h3>What Is a "De Minimis" Release?</h3>
+<p>Small, unavoidable amounts of refrigerant released during <strong>good-faith repair and maintenance</strong> operations are considered de minimis — they are not prohibited. However, deliberately opening a valve to release refrigerant is always a violation.</p>
+    `
+  },
+  {
+    id:'core-6', section:0, title:'The Refrigeration Cycle',
+    sub:'How refrigerant moves heat — the basics',
+    content:`
+<h2>How Refrigeration Works</h2>
+<p>A refrigeration system doesn't create cold — it <strong>moves heat</strong> from where it's not wanted (inside a building or refrigerator) to somewhere else (outside). The refrigerant is the heat carrier.</p>
+<h3>The Four Main Components</h3>
+<table class="ref-table"><thead><tr><th>Component</th><th>What it does</th><th>Refrigerant state</th></tr></thead><tbody>
+<tr><td>Compressor</td><td>Pumps refrigerant; compresses vapor, raising pressure and temperature</td><td>Low-pressure vapor in → high-pressure hot vapor out</td></tr>
+<tr><td>Condenser</td><td>Rejects heat to the outdoors; refrigerant condenses from vapor to liquid</td><td>Hot high-pressure vapor → high-pressure liquid</td></tr>
+<tr><td>Metering device</td><td>Reduces pressure; located at the END of the liquid line</td><td>High-pressure liquid → low-pressure mix (flash gas + liquid)</td></tr>
+<tr><td>Evaporator</td><td>Absorbs heat from the space; refrigerant boils/evaporates</td><td>Low-pressure liquid → low-pressure vapor</td></tr>
+</tbody></table>
+<h3>High Side vs. Low Side</h3>
+<p>The <strong>high side</strong> includes: compressor discharge → condenser → receiver → liquid line → metering device inlet. High pressure, warm/hot temperatures.</p>
+<p>The <strong>low side</strong> includes: metering device outlet → evaporator → suction line → compressor inlet. Low pressure, cool/cold temperatures.</p>
+<div class="callout"><div class="callout-title">📌 Key Fact</div><p>The <strong>receiver</strong> is on the <strong>high side</strong> — it stores liquid refrigerant between the condenser and the metering device. The receiver is NOT part of the low side.</p></div>
+<h3>Refrigerant States in the Cycle</h3>
+<ul>
+<li><strong>Suction line</strong> (evaporator outlet → compressor): cold, low-pressure vapor (superheated)</li>
+<li><strong>Discharge line</strong> (compressor → condenser): hot, high-pressure vapor</li>
+<li><strong>Liquid line</strong> (condenser → metering device): warm, high-pressure liquid</li>
+</ul>
+<h3>Superheat and Subcooling</h3>
+<p><strong>Superheat</strong> = temperature of refrigerant vapor above its saturation (boiling) temperature at a given pressure. Measured at the evaporator outlet/suction line. Protects the compressor from liquid slugging. Typical target: 10–20°F.</p>
+<p><strong>Subcooling</strong> = temperature that liquid refrigerant is cooled below its condensing temperature. Measured at the condenser outlet/liquid line. Ensures only liquid (no flash gas) enters the metering device. Typical target: 10–20°F.</p>
+<h3>Latent vs. Sensible Heat</h3>
+<p><strong>Sensible heat</strong> changes the temperature of a substance — you can sense it with a thermometer. Example: warming liquid refrigerant before it boils.</p>
+<p><strong>Latent heat</strong> changes the <strong>state</strong> of a substance at constant temperature — the heat used to boil refrigerant in the evaporator is latent heat. The refrigerant absorbs latent heat from the space it's cooling without changing temperature itself during the phase change.</p>
+    `
+  },
+
+  // ── TYPE I ───────────────────────────────────────────────
+  {
+    id:'t1-1', section:1, title:'What Is a Small Appliance (Type I)?',
+    sub:'Definition, equipment types, and key rules',
+    content:`
+<h2>Type I — Small Appliances</h2>
+<p>Type I covers equipment that is <strong>fully manufactured (hermetically sealed)</strong> and contains <strong>5 lbs or less of refrigerant</strong>. The system must be factory-sealed — not field-assembled.</p>
+<h3>Common Examples</h3>
+<ul>
+<li>Household refrigerators and freezers</li>
+<li>Window air conditioners</li>
+<li>Dehumidifiers</li>
+<li>Water coolers / drinking fountains</li>
+<li>Vending machines (refrigerated)</li>
+<li>Small walk-in coolers under 5 lbs charge</li>
+</ul>
+<h3>Hermetic Compressors</h3>
+<p>Small appliances use <strong>welded hermetic compressors</strong> — the motor and compressor are sealed inside a welded steel shell. There are no service valves, no access ports, and no way to open the compressor for repair. If it fails, the whole compressor is replaced.</p>
+<h3>Common Refrigerants in Type I Equipment</h3>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Application</th><th>Oil type</th></tr></thead><tbody>
+<tr><td>R-12</td><td>Old refrigerators, old automotive A/C (pre-1994)</td><td>Mineral oil</td></tr>
+<tr><td>R-134a</td><td>Current refrigerators, some window units</td><td>POE oil</td></tr>
+<tr><td>R-22</td><td>Older window A/C units</td><td>Mineral / AB oil</td></tr>
+</tbody></table>
+<div class="callout warn"><div class="callout-title">⚠ Oil Compatibility</div><p>R-134a requires <strong>POE (polyolester) oil</strong> — it is NOT compatible with mineral oil. When retrofitting an R-12 system to R-134a, the mineral oil must be completely flushed and replaced with POE oil.</p></div>
+<h3>Key Pressure Facts</h3>
+<p>Small appliances often operate at <strong>below-atmospheric pressure</strong> in the evaporator. For example, R-134a at 0°F is at about -0.5 psig (vacuum). This means air will infiltrate a system with leaky seals — a problem because air contains moisture.</p>
+    `
+  },
+  {
+    id:'t1-2', section:1, title:'Recovery Techniques for Small Appliances',
+    sub:'System-dependent vs. self-contained recovery',
+    content:`
+<h2>Two Recovery Methods for Type I</h2>
+<p>Small appliances have no service ports, so recovery requires creative access. The EPA allows two methods depending on whether the appliance's compressor is working.</p>
+<h3>System-Dependent (Passive) Recovery</h3>
+<p>Uses the <strong>appliance's own compressor</strong> to push refrigerant into a recovery cylinder. No separate recovery machine needed. Works only when the system compressor is <strong>functional</strong>.</p>
+<p>How it works: Connect a recovery cylinder to the service port (via a piercing valve or process tube adapter), open the cylinder valve, and run the appliance. The compressor does all the work.</p>
+<div class="callout warn"><div class="callout-title">⚠ Monitor the Cylinder</div><p>Watch cylinder weight and pressure during passive recovery. Never exceed 80% of cylinder capacity by weight. An overfull, warm cylinder can rupture.</p></div>
+<h3>Self-Contained Recovery</h3>
+<p>Uses a <strong>separate recovery machine with its own compressor</strong>. Works on any system, including those with non-functioning compressors. Required when the appliance compressor does not work.</p>
+<h3>Recovery Efficiency Requirements</h3>
+<table class="ref-table"><thead><tr><th>System condition</th><th>Manufacture date</th><th>Required level</th></tr></thead><tbody>
+<tr><td>Operative compressor</td><td>Before or after 11/15/93</td><td>4 inches Hg vacuum</td></tr>
+<tr><td>Non-operative compressor or leaky system</td><td>Before or after 11/15/93</td><td>90% of charge recovered</td></tr>
+</tbody></table>
+<h3>Creating Service Access</h3>
+<p>Since small appliances have no built-in service ports, technicians use:</p>
+<ul>
+<li><strong>Piercing valve (saddle valve)</strong> — clamps onto copper tubing and punctures it to create a temporary service port. Can be left on or removed after service.</li>
+<li><strong>Process tube adapter</strong> — clamps onto the compressor's process (stub) tube for recovery or charging access.</li>
+</ul>
+<h3>Disposal Rules</h3>
+<p>All refrigerant must be recovered before disposing of any small appliance — even if it's just a fraction of a pound. There is no minimum quantity exemption for disposal. Recovery must be performed before crushing, shredding, or landfilling.</p>
+    `
+  },
+
+  // ── TYPE II ──────────────────────────────────────────────
+  {
+    id:'t2-1', section:2, title:'Type II — High-Pressure Systems Overview',
+    sub:'Equipment types, refrigerants, and classifications',
+    content:`
+<h2>Type II — High-Pressure Systems</h2>
+<p>Type II covers appliances that use refrigerants operating <strong>above atmospheric pressure</strong> at normal conditions, and contain <strong>more than 5 lbs</strong> of refrigerant. This is the most common certification for HVAC technicians.</p>
+<h3>Common Equipment</h3>
+<ul>
+<li>Residential split-system air conditioners and heat pumps</li>
+<li>Commercial packaged rooftop units</li>
+<li>Commercial refrigeration (display cases, walk-in coolers)</li>
+<li>Medium-temperature refrigeration systems</li>
+</ul>
+<h3>Key Refrigerants</h3>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Type</th><th>Normal use</th><th>Status</th></tr></thead><tbody>
+<tr><td>R-22</td><td>HCFC</td><td>Older residential A/C</td><td>No new production after 2020</td></tr>
+<tr><td>R-410A</td><td>HFC blend</td><td>Current residential A/C</td><td>Active (being phased down)</td></tr>
+<tr><td>R-404A</td><td>HFC blend</td><td>Commercial refrigeration</td><td>Active — high GWP</td></tr>
+<tr><td>R-407C</td><td>HFC blend</td><td>Near drop-in for R-22</td><td>Active</td></tr>
+<tr><td>R-134a</td><td>HFC</td><td>Medium-temp refrigeration</td><td>Active</td></tr>
+</tbody></table>
+<h3>Pressure Comparison: R-22 vs. R-410A</h3>
+<p>R-410A operates at roughly <strong>1.6 times the pressure of R-22</strong>. This is critical — you cannot simply substitute R-410A in equipment designed for R-22. New compressors, copper lines, and components rated for higher pressure are required.</p>
+<p>Example: At 45°F evaporator temperature, R-22 runs at ~76 psig low side; R-410A runs at ~116 psig low side.</p>
+<h3>Very High Pressure Appliances</h3>
+<p>Some Type II equipment uses refrigerants like <strong>R-503, R-13, or R-23</strong> for ultra-low temperature applications (cascade systems reaching -100°F or below). These are classified as "very high pressure" appliances. The recovery requirement is <strong>0 in Hg</strong> (atmospheric pressure) — meaning you only need to bring the system to atmospheric before opening.</p>
+<div class="callout"><div class="callout-title">📌 Required Oil</div><p>All HFC refrigerants (R-410A, R-404A, R-407C) require <strong>POE (polyolester) oil</strong>. POE is hygroscopic — it absorbs moisture from the air rapidly. Keep systems sealed as much as possible during service.</p></div>
+    `
+  },
+  {
+    id:'t2-2', section:2, title:'Recovery Requirements & Leak Repair (Type II)',
+    sub:'Evacuation levels, leak rates, and repair rules',
+    content:`
+<h2>Recovery Requirements for High-Pressure Systems</h2>
+<table class="ref-table"><thead><tr><th>System size</th><th>Before 11/15/93</th><th>After 11/15/93</th></tr></thead><tbody>
+<tr><td>Less than 200 lbs</td><td>4 in Hg</td><td>10 in Hg</td></tr>
+<tr><td>200 lbs or more</td><td>4 in Hg</td><td>25 in Hg</td></tr>
+<tr><td>Very high pressure</td><td>0 in Hg</td><td>0 in Hg</td></tr>
+</tbody></table>
+<div class="callout good"><div class="callout-title">✓ Tip</div><p>If the system is LEAKING, you only need to recover to atmospheric pressure — pulling a vacuum on a leaky system just pulls air in. Document the leak and repair it before re-evacuating.</p></div>
+<h3>Calculating the Annual Leak Rate</h3>
+<p><strong>Formula:</strong> Annual leak rate (%) = (Pounds of refrigerant added per year ÷ Total nameplate charge in pounds) × 100</p>
+<p><strong>Example:</strong> A system holds 60 lbs of R-410A. You added 25 lbs over the past 12 months.<br>25 ÷ 60 × 100 = <strong>41.7% annual leak rate</strong>. Since 41.7% exceeds the 35% commercial threshold, repair is mandatory.</p>
+<h3>Leak Repair Timeframes</h3>
+<ul>
+<li>Repair within <strong>30 days</strong> of discovering a leak that exceeds the threshold</li>
+<li>One <strong>30-day extension</strong> allowed if parts must be ordered (60 days total)</li>
+<li>If repair is not possible, the system must be <strong>retired</strong> (refrigerant recovered)</li>
+</ul>
+<h3>Pumpdown Procedure</h3>
+<p>A pumpdown moves refrigerant from the low side into the receiver (high side) by running the compressor with the liquid line valve (king valve) closed. This lets you service the evaporator or low-side piping without full refrigerant recovery. The low side can be opened once it reaches atmospheric or low pressure — just the refrigerant that was in the low side needs to be recovered.</p>
+<h3>Nitrogen Pressure Testing</h3>
+<p>After repair, pressure test with <strong>dry nitrogen</strong> — not refrigerant, not air. Pressurize, isolate from the nitrogen cylinder, and watch for pressure drop over 15–30 minutes. Then use a leak detector or soap bubbles to pinpoint any leak.</p>
+<h3>Charging Rules for Blends</h3>
+<p>Zeotropic blends (R-407C, R-404A) must be charged as <strong>vapor only</strong> through the low-side service port while the system runs. Charging as liquid causes fractionation — different components are drawn at different rates, leaving the cylinder depleted in some components.</p>
+<p>R-22 (a single component) can be added as vapor on the low side while running.</p>
+    `
+  },
+
+  // ── TYPE III ─────────────────────────────────────────────
+  {
+    id:'t3-1', section:3, title:'Type III — Low-Pressure Systems',
+    sub:'Centrifugal chillers, operating in vacuum, and unique hazards',
+    content:`
+<h2>Type III — Low-Pressure Systems</h2>
+<p>Type III covers equipment that uses refrigerants that <strong>operate below atmospheric pressure</strong> in the evaporator. Because the system runs in a vacuum, air can leak IN rather than refrigerant leaking out. This creates unique challenges.</p>
+<h3>Common Equipment</h3>
+<p>Almost exclusively <strong>large centrifugal chillers</strong> — chilled-water systems used for large commercial buildings and industrial processes. These can cool millions of square feet.</p>
+<h3>Key Refrigerants</h3>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Replaces</th><th>ODP</th><th>Boiling point at atmospheric pressure</th></tr></thead><tbody>
+<tr><td>R-11</td><td>—</td><td>1.0 (banned)</td><td>74.7°F — boils at room temperature at atmospheric pressure</td></tr>
+<tr><td>R-123</td><td>R-11</td><td>0.02</td><td>82.2°F — also boils above room temp at atmospheric</td></tr>
+<tr><td>R-134a</td><td>R-11 (alt.)</td><td>0.0</td><td>-15.1°F — operates at slightly higher pressure in chillers</td></tr>
+</tbody></table>
+<h3>Why These Refrigerants Run in Vacuum</h3>
+<p>R-11 boils at 74.7°F at atmospheric pressure. To use it as a refrigerant (boiling around 38°F to chill water), the pressure must be <strong>reduced below atmospheric</strong>. That's why the evaporator operates in a vacuum — typically 18–27 inches Hg below atmospheric.</p>
+<h3>Air Infiltration — The Main Problem</h3>
+<p>Because the system runs in vacuum, any leak lets <strong>air in rather than refrigerant out</strong>. Air in a refrigerant system is a non-condensable gas — it doesn't condense at normal operating temperatures. It accumulates in the condenser, raises head pressure, reduces efficiency, and can cause compressor surge.</p>
+<h3>The Purge Unit</h3>
+<p>Low-pressure chillers have an automatic <strong>purge unit</strong> that continuously removes non-condensable gases (air). It separates refrigerant from air and exhausts the air. Monitoring purge unit runtime is a key diagnostic tool — excessive purge hours mean significant air infiltration and indicate leaks that need repair.</p>
+<p><strong>High-efficiency purge units</strong> recover the refrigerant from the purge exhaust before venting the air, minimizing refrigerant losses.</p>
+<div class="callout danger"><div class="callout-title">⚠ R-11 Phosgene Hazard</div><p>R-11 (CFC) decomposes when exposed to open flame or high heat, producing <strong>phosgene</strong> — an extremely toxic gas. Always purge with nitrogen and ventilate before any brazing or welding on a system that has contained R-11.</p></div>
+<h3>Centrifugal Compressor Basics</h3>
+<p>Centrifugal chillers use <strong>dynamic (centrifugal) compressors</strong> — high-speed impellers accelerate refrigerant vapor, converting velocity to pressure. They work best with large volumes of low-density vapor. <strong>Compressor surge</strong> occurs when the pressure differential across the compressor is too high relative to refrigerant flow — causing violent flow reversal. Surge can damage the compressor and is prevented by head pressure controls and variable inlet guide vanes.</p>
+    `
+  },
+  {
+    id:'t3-2', section:3, title:'Type III Service Procedures',
+    sub:'Recovery requirements, leak testing, and safety',
+    content:`
+<h2>Service Procedures for Low-Pressure Systems</h2>
+<h3>Recovery Requirements</h3>
+<p>Before opening a low-pressure system for any service:</p>
+<ul>
+<li>Recovery equipment must achieve <strong>25 mm Hg absolute pressure</strong> (approximately 29 inches Hg vacuum)</li>
+<li>Start with <strong>liquid recovery first</strong> (liquid is drawn from the bottom of the evaporator), then vapor recovery</li>
+<li>Water must keep circulating through the chiller tubes during recovery to prevent <strong>freezing</strong> — as pressure drops, refrigerant gets very cold and can freeze water in the tubes</li>
+</ul>
+<h3>Recovery Equipment Settings</h3>
+<ul>
+<li>Recovery equipment high-pressure cutout: set at <strong>10 psig</strong> (chiller rupture discs are typically at 15 psig — the cutout prevents overpressurizing the shell)</li>
+<li>For oil removal: oil must reach <strong>130°F</strong> to reduce viscosity and drive dissolved refrigerant out</li>
+</ul>
+<h3>Leak Testing Low-Pressure Systems</h3>
+<p>You can't use high pressure nitrogen on a low-pressure chiller shell. Instead:</p>
+<ul>
+<li><strong>Controlled hot water</strong> can warm the refrigerant, slightly raising pressure above atmospheric — then check for leaks</li>
+<li><strong>Dry nitrogen at low pressure</strong> (not to exceed 10 psig — well below the 15 psig rupture disc) can pressurize for leak detection</li>
+<li>Electronic halogen detectors, UV fluorescent dye, and ultrasonic detectors all work for finding leaks</li>
+</ul>
+<div class="callout warn"><div class="callout-title">⚠ Rupture Disc</div><p>Low-pressure chillers have rupture discs set at approximately 15 psig. Never exceed this pressure during testing. The recovery machine's high-pressure cutout must be set at 10 psig or less.</p></div>
+<h3>Residual Vapor After Liquid Recovery</h3>
+<p>After all liquid is removed from a low-pressure system, significant vapor remains. A <strong>350-ton R-11 chiller</strong> at 0 psig still contains approximately <strong>100 pounds of vapor</strong>. This vapor must also be recovered — it's a substantial quantity.</p>
+<h3>Annual Leak Rate Threshold</h3>
+<p>Low-pressure chillers with 50+ lbs follow the same 35% annual leak rate threshold as other commercial/industrial refrigeration equipment. Mandatory repair within 30 days (plus one 30-day extension if needed).</p>
+<h3>Record Keeping</h3>
+<p>Same as all 50+ lb systems: keep records of refrigerant added (dates and amounts) and any leaks discovered and repaired for at least <strong>3 years</strong>.</p>
+    `
+  }
+];
+
+// ═══════════════════════════════════════════════════════════
+// VOCABULARY TERMS
+// ═══════════════════════════════════════════════════════════
+const VOCAB = [
+  {term:'Section 608',cat:'core',def:'The section of the Clean Air Act that regulates refrigerant handling. Requires all persons who maintain, service, repair, or dispose of appliances containing regulated refrigerants to be certified.'},
+  {term:'ODP (Ozone Depletion Potential)',cat:'core',def:'A measure of a substance\'s ability to destroy stratospheric ozone, relative to CFC-11 (ODP = 1.0). CFCs have the highest ODP; HFCs have zero ODP.'},
+  {term:'GWP (Global Warming Potential)',cat:'core',def:'A measure of how much heat a gas traps over 100 years, relative to CO2 (GWP = 1). HFCs have high GWP despite zero ODP.'},
+  {term:'CFC (Chlorofluorocarbon)',cat:'core',def:'Refrigerants containing chlorine, fluorine, and carbon. Highest ODP — banned from production. Examples: R-11, R-12, R-113, R-502.'},
+  {term:'HCFC (Hydrochlorofluorocarbon)',cat:'core',def:'Refrigerants with added hydrogen, reducing ODP compared to CFCs but still non-zero. Being phased out. Examples: R-22, R-123, R-124.'},
+  {term:'HFC (Hydrofluorocarbon)',cat:'core',def:'Refrigerants containing hydrogen, fluorine, and carbon — no chlorine, so zero ODP. High GWP. Examples: R-134a, R-410A, R-404A.'},
+  {term:'Montreal Protocol',cat:'core',def:'International treaty signed in 1987, effective 1989, phasing out ozone-depleting substances. Phased out CFCs first, then HCFCs. The Kigali Amendment (2016) added HFC phase-down.'},
+  {term:'Kigali Amendment',cat:'core',def:'2016 amendment to the Montreal Protocol that targets HFCs for phase-down due to their high global warming potential.'},
+  {term:'Recovery',cat:'core',def:'Removing refrigerant from a system and storing it in an approved cylinder without testing or processing it. Required before opening any refrigerant system.'},
+  {term:'Recycling',cat:'core',def:'Cleaning recovered refrigerant using oil separation and filter-driers for reuse on the same job site. Does not meet ARI 700 standards; cannot be resold.'},
+  {term:'Reclamation',cat:'core',def:'Processing refrigerant to ARI Standard 700 purity — equivalent to virgin refrigerant. Only EPA-certified reclaimers can reclaim. Reclaimed refrigerant may be resold.'},
+  {term:'ARI Standard 700',cat:'core',def:'Purity specification that reclaimed refrigerant must meet before it can be resold. Equivalent quality to new refrigerant.'},
+  {term:'De minimis release',cat:'core',def:'A small, incidental, unavoidable release of refrigerant during good-faith repair operations. Not prohibited by EPA regulations.'},
+  {term:'Low-loss fitting',cat:'core',def:'An automatic shut-off valve on recovery equipment hose connections that prevents refrigerant from escaping when hoses are disconnected. Required on all recovery equipment manufactured after November 1993.'},
+  {term:'DOT-4BA / DOT-4BW',cat:'core',def:'Department of Transportation cylinder specifications for recovery cylinders. These designations indicate the construction standards and pressure ratings required for safe refrigerant transport.'},
+  {term:'Superheated vapor',cat:'core',def:'Refrigerant vapor that has been heated above its saturation temperature at a given pressure. The suction line carries superheated vapor. Protects the compressor from liquid slugging.'},
+  {term:'Subcooling',cat:'core',def:'The amount liquid refrigerant is cooled below its condensing (saturation) temperature at a given pressure. Ensures only liquid refrigerant enters the metering device. Typical range: 10–20°F.'},
+  {term:'Latent heat',cat:'core',def:'Heat that changes the state of a substance (solid→liquid or liquid→vapor) without changing its temperature. The evaporator absorbs latent heat from the cooled space.'},
+  {term:'Sensible heat',cat:'core',def:'Heat that causes a temperature change in a substance without a change of state. Measurable with a thermometer.'},
+  {term:'Azeotropic blend',cat:'core',def:'A refrigerant blend whose components cannot be separated by distillation — behaves like a single-component refrigerant with a fixed boiling point. Examples: R-500, R-502.'},
+  {term:'Zeotropic blend',cat:'core',def:'A refrigerant blend whose components have different boiling points, exhibiting temperature glide during phase change. Must be charged as vapor only to prevent fractionation. Examples: R-407C, R-404A, R-410A.'},
+  {term:'Temperature glide',cat:'core',def:'The difference between the bubble point and dew point temperatures during phase change of a zeotropic refrigerant blend. The refrigerant changes temperature as it changes state.'},
+  {term:'Fractionation',cat:'core',def:'Separation of a zeotropic blend\'s components due to their different boiling points. Occurs when liquid is drawn from a blend cylinder — lower-boiling components escape first, changing the remaining mixture ratio.'},
+  {term:'Phosgene',cat:'core',def:'An extremely toxic gas produced when CFC or HCFC refrigerants (especially R-11) are exposed to open flames or high heat. Risk during brazing or welding on contaminated systems.'},
+  {term:'Non-condensable gas',cat:'core',def:'A gas (like air or nitrogen) that does not condense at normal operating temperatures and pressures. Accumulates in the condenser, raises head pressure, and reduces efficiency.'},
+
+  {term:'Hermetically sealed system',cat:'t1',def:'A refrigerant system whose components (compressor, condenser, evaporator) are permanently sealed and welded shut with no external access points. All small appliances use hermetic or semi-hermetic compressors.'},
+  {term:'Welded hermetic compressor',cat:'t1',def:'A compressor sealed in a welded steel shell with no serviceable access. Used in all small appliances. Cannot be opened — the whole unit must be replaced if the compressor fails.'},
+  {term:'System-dependent (passive) recovery',cat:'t1',def:'Recovery method that uses the appliance\'s own compressor to push refrigerant into the recovery cylinder. Requires a functional system compressor. Primarily used for Type I small appliances.'},
+  {term:'Piercing valve (saddle valve)',cat:'t1',def:'A clamp-on valve that creates a temporary service port by puncturing the copper refrigerant tubing on hermetically sealed systems. Used when no service ports exist.'},
+  {term:'Process tube',cat:'t1',def:'A small stub of copper tubing on the hermetic compressor shell used for service access (recovery or charging) via a process tube adapter or brazing on a fitting.'},
+  {term:'POE oil (Polyolester)',cat:'t1',def:'Synthetic oil required with HFC refrigerants (R-134a, R-410A, R-404A). Not compatible with mineral oil. Hygroscopic — absorbs moisture rapidly from air. Must keep systems closed during service.'},
+  {term:'Mineral oil',cat:'t1',def:'Traditional refrigerant oil compatible with CFC refrigerants like R-12. NOT compatible with HFCs. Must be replaced with POE oil when retrofitting R-12 systems to R-134a.'},
+  {term:'Capillary tube',cat:'t1',def:'A small-diameter, fixed-length tube used as the metering device in small appliances. Creates a pressure drop through restriction. Simple, reliable, no moving parts — common in refrigerators and small A/C units.'},
+  {term:'Defrost system (frost-free)',cat:'t1',def:'A system in modern refrigerators that periodically runs an electric heater to melt frost buildup from the evaporator coil. Without it, frost restricts airflow and reduces cooling efficiency.'},
+
+  {term:'High-side',cat:'t2',def:'The high-pressure portion of the refrigerant circuit: compressor discharge → condenser → receiver → liquid line → metering device inlet. Operates at higher pressure and temperature.'},
+  {term:'Low-side',cat:'t2',def:'The low-pressure portion of the refrigerant circuit: metering device outlet → evaporator → suction line → compressor inlet. Operates at lower pressure and temperature.'},
+  {term:'Receiver (liquid receiver)',cat:'t2',def:'A storage vessel on the HIGH side of the system, between the condenser outlet and the liquid line. Stores liquid refrigerant to accommodate charge variations and allows pumpdown for service.'},
+  {term:'King valve',cat:'t2',def:'Service valve at the outlet of the liquid receiver. Closing it isolates the receiver and high side from the liquid line — used during pumpdown procedures.'},
+  {term:'TXV (Thermostatic Expansion Valve)',cat:'t2',def:'A metering device that regulates refrigerant flow into the evaporator based on suction line superheat. Opens when superheat rises (more refrigerant needed), closes when it drops. More precise than a cap tube.'},
+  {term:'EEV (Electronic Expansion Valve)',cat:'t2',def:'A stepper-motor-driven metering valve controlled by an electronic controller. Responds faster than TXV, allows variable capacity operation, and maintains tighter superheat control.'},
+  {term:'Pumpdown',cat:'t2',def:'Moving refrigerant from the low side into the receiver (high side) by running the compressor with the king valve closed. Allows low-side service without full refrigerant recovery.'},
+  {term:'Compression ratio',cat:'t2',def:'Ratio of absolute discharge pressure to absolute suction pressure. High ratios cause high discharge temperatures and compressor wear. Ideal range: 3:1 to 7:1.'},
+  {term:'Crankcase heater',cat:'t2',def:'An electric heater on the compressor base that prevents refrigerant from migrating into and dissolving in the oil during off cycles. Prevents liquid slugging when the compressor restarts.'},
+  {term:'Liquid slugging',cat:'t2',def:'Liquid refrigerant or oil entering the compressor cylinder, which can fracture valves, damage pistons, and cause catastrophic failure. Prevented by maintaining adequate suction superheat.'},
+  {term:'Flash gas',cat:'t2',def:'Vapor formed when liquid refrigerant flashes (partially evaporates) as pressure drops in the liquid line or at the metering device inlet. Reduces system capacity and metering device efficiency.'},
+  {term:'Hot gas bypass',cat:'t2',def:'A valve that routes hot compressor discharge gas into the evaporator inlet at low load conditions, preventing dangerously low evaporator pressure while keeping the compressor loaded.'},
+  {term:'Approach temperature',cat:'t2',def:'The temperature difference between the condensing refrigerant and the entering air (or water) at the condenser. High approach indicates fouled coils, non-condensable gases, or restricted airflow.'},
+  {term:'Annual leak rate',cat:'t2',def:'(Pounds of refrigerant added per year ÷ total nameplate charge) × 100%. Threshold for mandatory repair: 15% for comfort cooling, 35% for commercial/industrial refrigeration.'},
+
+  {term:'Centrifugal chiller',cat:'t3',def:'A large chilled-water system using a dynamic (centrifugal) compressor. Used in large commercial buildings and industrial plants. Typically uses low-pressure refrigerants (R-11, R-123, R-134a).'},
+  {term:'Centrifugal compressor',cat:'t3',def:'A dynamic compressor using a high-speed rotating impeller to accelerate refrigerant vapor, converting velocity to pressure. Works best with large volumes of low-density (low-pressure) vapor.'},
+  {term:'Compressor surge',cat:'t3',def:'A dangerous condition in centrifugal compressors where refrigerant flow reverses rapidly and repeatedly when the pressure differential is too high relative to flow. Causes vibration and mechanical damage.'},
+  {term:'Purge unit',cat:'t3',def:'A device on low-pressure chillers that automatically removes non-condensable gases (air) that infiltrate through seals and joints. Separates refrigerant from air and exhausts the air.'},
+  {term:'High-efficiency purge unit',cat:'t3',def:'A purge unit that captures and recovers refrigerant from the purge exhaust stream before venting air, significantly reducing refrigerant emissions from low-pressure systems.'},
+  {term:'Flooded evaporator',cat:'t3',def:'An evaporator design used in centrifugal chillers where liquid refrigerant fills the shell and chilled-water tubes pass through it. Refrigerant boils around the tubes, absorbing heat from the water.'},
+  {term:'Variable inlet guide vanes (VIGV)',cat:'t3',def:'Adjustable vanes at the compressor inlet that pre-swirl refrigerant vapor entering the impeller, modulating chiller capacity and efficiency across a wide range of loads.'},
+  {term:'Rupture disc',cat:'t3',def:'A safety device on low-pressure chillers that ruptures at a set pressure (typically ~15 psig) to prevent overpressurization. Recovery equipment must have a 10 psig high-pressure cutout to stay below this threshold.'},
+  {term:'kW/ton',cat:'t3',def:'The efficiency metric for chillers. Kilowatts of electrical input per ton of cooling capacity. Lower is more efficient. Modern high-efficiency centrifugal chillers achieve 0.3–0.5 kW/ton.'},
+  {term:'Water box',cat:'t3',def:'End caps on shell-and-tube heat exchangers (evaporator and condenser) that direct water flow through the tubes and provide access for tube maintenance and cleaning.'},
+  {term:'Tube fouling',cat:'t3',def:'Scale, biofilm, or deposits on the water side of heat exchanger tubes that insulate the tubes and reduce heat transfer efficiency, increasing energy use and condensing temperature.'},
+];
+
+// ═══════════════════════════════════════════════════════════
+// REFERENCE RESOURCES
+// ═══════════════════════════════════════════════════════════
+const RESOURCES = [
+  {
+    title:'Refrigerant Cylinder Color Chart', icon:'🎨',
+    content:`<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Cylinder Color</th><th>Type</th></tr></thead><tbody>
+<tr><td>R-11</td><td>Orange</td><td>CFC (banned)</td></tr>
+<tr><td>R-12</td><td>White</td><td>CFC (banned)</td></tr>
+<tr><td>R-22</td><td>Light green</td><td>HCFC (phased out)</td></tr>
+<tr><td>R-123</td><td>Light blue-gray</td><td>HCFC</td></tr>
+<tr><td>R-134a</td><td>Light blue</td><td>HFC</td></tr>
+<tr><td>R-404A</td><td>Orange</td><td>HFC blend</td></tr>
+<tr><td>R-407C</td><td>Chocolate brown</td><td>HFC blend</td></tr>
+<tr><td>R-410A</td><td>Pink / Rose</td><td>HFC blend</td></tr>
+<tr><td>R-502</td><td>Light purple / orchid</td><td>CFC/HCFC blend (banned)</td></tr>
+<tr><td>R-717 (Ammonia)</td><td>Silver</td><td>Natural</td></tr>
+<tr><td>R-744 (CO2)</td><td>Aluminum / gray</td><td>Natural</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>Exam tip:</strong> R-410A is pink/rose. R-22 is light green. R-134a is light blue. These three come up most often.</div>`
+  },
+  {
+    title:'Required Evacuation Levels', icon:'📉',
+    content:`<div class="tip-box"><strong>High-pressure systems</strong> — vacuum required before opening:</div>
+<table class="ref-table"><thead><tr><th>System Size</th><th>Before 11/15/93</th><th>After 11/15/93</th></tr></thead><tbody>
+<tr><td>Very high pressure (any size)</td><td>0 in Hg</td><td>0 in Hg</td></tr>
+<tr><td>High-pressure, less than 200 lbs</td><td>4 in Hg</td><td>10 in Hg</td></tr>
+<tr><td>High-pressure, 200 lbs or more</td><td>4 in Hg</td><td>25 in Hg</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>Small appliances (Type I):</strong><br>
+- Operative compressor → 4 in Hg vacuum<br>
+- Non-operative or leaky → 90% of charge recovered</div>
+<div class="tip-box"><strong>Low-pressure systems (Type III):</strong><br>
+25 mm Hg absolute pressure (≈ 29 in Hg vacuum) before opening.</div>`
+  },
+  {
+    title:'Leak Rate Thresholds & Repair Deadlines', icon:'🔧',
+    content:`<table class="ref-table"><thead><tr><th>Equipment Type</th><th>Annual Leak Rate Threshold</th><th>Repair Deadline</th></tr></thead><tbody>
+<tr><td>Comfort cooling (commercial A/C)</td><td>15% per year</td><td>30 days (+ 30-day extension)</td></tr>
+<tr><td>Commercial / industrial process refrigeration</td><td>35% per year</td><td>30 days (+ 30-day extension)</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>Only applies to systems with 50 lbs or more of refrigerant.</strong> Below 50 lbs, there is no mandatory leak rate threshold — but you still cannot knowingly vent refrigerant.</div>
+<div class="tip-box"><strong>Formula:</strong> Annual leak rate = (lbs added per year ÷ total nameplate charge) × 100%</div>`
+  },
+  {
+    title:'Refrigerant Properties Quick Reference', icon:'⚗️',
+    content:`<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Class</th><th>ODP</th><th>GWP</th><th>Oil</th><th>Pressure</th></tr></thead><tbody>
+<tr><td>R-11</td><td>CFC</td><td>1.0</td><td>4,750</td><td>Mineral</td><td>Low (vacuum)</td></tr>
+<tr><td>R-12</td><td>CFC</td><td>1.0</td><td>10,900</td><td>Mineral</td><td>Medium</td></tr>
+<tr><td>R-22</td><td>HCFC</td><td>0.05</td><td>1,810</td><td>Mineral / AB</td><td>High</td></tr>
+<tr><td>R-123</td><td>HCFC</td><td>0.02</td><td>77</td><td>Alkylbenzene</td><td>Low (vacuum)</td></tr>
+<tr><td>R-134a</td><td>HFC</td><td>0.0</td><td>1,430</td><td>POE</td><td>Medium</td></tr>
+<tr><td>R-404A</td><td>HFC blend</td><td>0.0</td><td>3,922</td><td>POE</td><td>High</td></tr>
+<tr><td>R-407C</td><td>HFC blend</td><td>0.0</td><td>1,774</td><td>POE</td><td>High</td></tr>
+<tr><td>R-410A</td><td>HFC blend</td><td>0.0</td><td>2,088</td><td>POE</td><td>Very high</td></tr>
+<tr><td>R-717</td><td>Natural</td><td>0.0</td><td>0</td><td>Mineral / PAG</td><td>Medium</td></tr>
+<tr><td>R-744 (CO2)</td><td>Natural</td><td>0.0</td><td>1</td><td>POE / PAG</td><td>Very high</td></tr>
+</tbody></table>`
+  },
+  {
+    title:'Safety: Cylinder Storage & Handling', icon:'🧯',
+    content:`<table class="ref-table"><thead><tr><th>Rule</th><th>Detail</th></tr></thead><tbody>
+<tr><td>Storage position</td><td>Upright, valve end up</td></tr>
+<tr><td>Maximum fill level</td><td>80% of capacity by weight</td></tr>
+<tr><td>Cylinder certification</td><td>DOT-4BA or DOT-4BW for recovery cylinders</td></tr>
+<tr><td>Mixing refrigerants</td><td>NEVER — different refrigerants in one cylinder</td></tr>
+<tr><td>Shipping requirements</td><td>Proper DOT hazmat labels; upright position</td></tr>
+<tr><td>Non-refillable cylinders</td><td>Must be punctured/rendered non-refillable before disposal</td></tr>
+<tr><td>Warm, heavy cylinder</td><td>May be full of liquid — do not fill further; dangerous</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>PPE minimum:</strong> Safety glasses and gloves. Use chemical splash goggles when handling liquid refrigerant. Liquid refrigerant causes frostbite on skin contact.</div>
+<div class="tip-box"><strong>Never use oxygen</strong> to pressurize refrigerant systems — oil + oxygen = explosion risk. Use dry nitrogen only.</div>`
+  },
+  {
+    title:'EPA Penalties & Enforcement', icon:'⚖️',
+    content:`<table class="ref-table"><thead><tr><th>Violation</th><th>Penalty</th></tr></thead><tbody>
+<tr><td>Knowingly venting refrigerant</td><td>Civil penalty up to $44,539 per day per violation</td></tr>
+<tr><td>Criminal violations (willful)</td><td>Criminal penalties and imprisonment possible</td></tr>
+<tr><td>Providing info leading to conviction</td><td>EPA reward up to $10,000</td></tr>
+<tr><td>Purchasing refrigerant without certification</td><td>Civil penalty; distributor also liable</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>Record-keeping violation:</strong> Failing to maintain required records for 50+ lb systems can also result in civil penalties. Records must be kept for at least 3 years.</div>
+<div class="tip-box"><strong>Certifications never expire</strong> — but technicians are responsible for staying current with changing regulations on their own.</div>`
+  },
+  {
+    title:'P/T Chart Reading Guide', icon:'📈',
+    content:`<div class="tip-box">A <strong>Pressure-Temperature (P/T) chart</strong> shows the saturation temperature of a refrigerant at a given pressure, and vice versa. When a refrigerant is changing phase (evaporating or condensing), its temperature and pressure are locked together — fix one, and you know the other.</div>
+<h3 style="margin-top:12px;font-size:14px;color:var(--accent)">How to use it:</h3>
+<div class="tip-box">1. Read the gauge pressure (psig) on your manifold.<br>2. Find that pressure in the P/T chart for your specific refrigerant.<br>3. The corresponding temperature is the <strong>saturation temperature</strong> — the temperature at which that refrigerant boils at that pressure.</div>
+<table class="ref-table"><thead><tr><th>Refrigerant</th><th>Common exam P/T values</th></tr></thead><tbody>
+<tr><td>R-22 at 84 psig</td><td>≈ 50°F saturation temperature</td></tr>
+<tr><td>R-22 at 76 psig</td><td>≈ 45°F saturation temperature</td></tr>
+<tr><td>R-410A at 116 psig</td><td>≈ 45°F saturation temperature</td></tr>
+<tr><td>R-22 at -41.4°F</td><td>≈ 0 psig (boiling point at atmospheric)</td></tr>
+<tr><td>R-11 at 74.7°F</td><td>≈ 0 psig (boiling point at atmospheric)</td></tr>
+</tbody></table>
+<div class="tip-box"><strong>You can only accurately read refrigerant pressure with a stable temperature.</strong> Always allow pressures and temperatures to stabilize before recording readings.</div>`
+  },
+  {
+    title:'Exam Day Quick Facts', icon:'🎯',
+    content:`<div class="tip-box"><strong>Real exam format:</strong> 25 questions per section, multiple choice. Pass = 70% (proctored) or 84% (online/Type I only). Must pass Core + at least one Type section to receive any certification.</div>
+<table class="ref-table"><thead><tr><th>Topic</th><th>Key number</th></tr></thead><tbody>
+<tr><td>Montreal Protocol effective</td><td>1989 (signed 1987)</td></tr>
+<tr><td>Ozone layer altitude</td><td>11–21 miles above Earth</td></tr>
+<tr><td>EPA informant reward</td><td>Up to $10,000</td></tr>
+<tr><td>Max civil penalty (venting)</td><td>$44,539 per day per violation</td></tr>
+<tr><td>Max cylinder fill</td><td>80% by weight</td></tr>
+<tr><td>Small appliance max charge</td><td>5 lbs or less</td></tr>
+<tr><td>Record-keeping duration</td><td>3 years minimum</td></tr>
+<tr><td>Comfort cooling leak threshold</td><td>15% annual</td></tr>
+<tr><td>Commercial refrigeration leak threshold</td><td>35% annual</td></tr>
+<tr><td>Repair deadline</td><td>30 days + one 30-day extension</td></tr>
+<tr><td>Type III evacuation level</td><td>25 mm Hg absolute</td></tr>
+<tr><td>Type III rupture disc pressure</td><td>~15 psig</td></tr>
+<tr><td>Type III recovery machine cutout</td><td>10 psig</td></tr>
+<tr><td>Residual vapor in 350-ton R-11 chiller at 0 psig</td><td>~100 lbs</td></tr>
+<tr><td>Oil temp for Type III oil removal</td><td>130°F</td></tr>
+</tbody></table>`
+  },
+];
+
+// ═══════════════════════════════════════════════════════════
+// QUESTION BANK
+// ═══════════════════════════════════════════════════════════
+const Q = [
+// ── CORE (s:0) ──
+{s:0,q:"What year did the Montreal Protocol take effect?",o:["1985","1987","1989","1992"],a:2,e:"The Montreal Protocol was signed in 1987 and entered into force (took effect) in 1989. It phases out ozone-depleting substances including CFCs and HCFCs."},
+{s:0,q:"How much does the EPA offer to informants who report illegal refrigerant venting?",o:["$5,000","$7,500","$10,000","$25,000"],a:2,e:"The EPA offers up to $10,000 to persons who provide information leading to a civil penalty or criminal conviction for illegal venting of refrigerants under Section 608."},
+{s:0,q:"What is the maximum civil penalty per day per violation for knowingly venting refrigerant?",o:["$10,000","$25,000","$37,500","$44,539"],a:3,e:"Civil penalties under Section 608 can reach $44,539 per day per violation (adjusted for inflation). Criminal penalties are also possible for willful violations."},
+{s:0,q:"Which certification type covers ALL equipment?",o:["Core","Type I","Type II","Universal"],a:3,e:"Universal certification requires passing all four sections (Core, Type I, Type II, and Type III). Universal-certified technicians can work on small appliances, high-pressure, and low-pressure systems."},
+{s:0,q:"Which refrigerant class has ZERO ozone depletion potential?",o:["CFCs","HCFCs","HFCs","All refrigerants"],a:2,e:"HFCs (hydrofluorocarbons) contain no chlorine or bromine, so they have zero ODP. CFCs have ODP up to 1.0, HCFCs have reduced but non-zero ODP."},
+{s:0,q:"R-22 belongs to which refrigerant class?",o:["CFC","HFC","HCFC","Natural refrigerant"],a:2,e:"R-22 (chlorodifluoromethane) is an HCFC. It contains chlorine (hence some ODP = 0.05) but less than CFCs. New production and import of R-22 ended January 1, 2020."},
+{s:0,q:"What type of refrigerant is R-410A?",o:["CFC","HCFC","HFC zeotropic blend","Natural refrigerant"],a:2,e:"R-410A is an HFC blend of R-32 and R-125. Zero ODP, high GWP (~2,088). It replaced R-22 in residential equipment but is also being phased down due to GWP."},
+{s:0,q:"Which refrigerant is used in 'very high pressure' appliances such as cascade systems?",o:["R-11","R-22","R-503","R-410A"],a:2,e:"R-503 (a blend of R-23 and R-13) is an example refrigerant for very high pressure/ultra-low-temperature cascade applications. These refrigerants have boiling points well below -50°C."},
+{s:0,q:"What is the ODP of R-11?",o:["0.0","0.05","0.5","1.0"],a:3,e:"R-11 (CFC) has an ODP of 1.0 — it is the baseline substance against which all other refrigerants are measured. It also has one of the highest GWPs among commonly used refrigerants."},
+{s:0,q:"Which of the following has an ODP of zero AND a GWP close to zero?",o:["R-22","R-134a","Ammonia (R-717)","R-410A"],a:2,e:"Ammonia (R-717) is a natural refrigerant with zero ODP and zero GWP. R-134a has zero ODP but GWP of 1,430. R-22 has ODP of 0.05. R-410A has GWP of 2,088."},
+{s:0,q:"What is the PRIMARY danger of chlorine atoms in the stratosphere?",o:["They combine with oxygen to form smog","They catalytically destroy ozone molecules in a chain reaction","They increase UV light intensity directly","They cause acid rain"],a:1,e:"Each free chlorine atom can destroy up to 100,000 ozone molecules in a chain reaction. After destroying ozone, the chlorine atom is freed again to start the process over — it acts as a catalyst."},
+{s:0,q:"The ozone layer is located approximately how far above Earth?",o:["1 to 5 miles","11 to 21 miles","30 to 50 miles","60 to 100 miles"],a:1,e:"The protective ozone layer sits approximately 11 to 21 miles (10 to 50 km) above Earth's surface in the stratosphere. It blocks most of the sun's harmful UV-B radiation."},
+{s:0,q:"What is 'recovery' in the context of EPA 608?",o:["Cleaning refrigerant with oil separation for local reuse","Removing refrigerant from a system into an approved container without testing it","Processing refrigerant to ARI 700 purity standards","Measuring how much refrigerant a system needs"],a:1,e:"Recovery means removing refrigerant from a system and storing it in an approved recovery cylinder without testing or processing. It must be done before opening any refrigerant system."},
+{s:0,q:"What is the difference between recycling and reclamation?",o:["No difference — both terms mean the same thing","Recycling is on-site cleaning for reuse; reclamation processes to ARI 700 purity for resale","Recycling is for HFCs; reclamation is for CFCs","Reclamation is done on-site; recycling is sent to a facility"],a:1,e:"Recycling cleans refrigerant with oil separation and filter-driers for reuse on the same job site. Reclamation processes refrigerant to ARI 700 purity — equivalent to virgin refrigerant — for resale. Only EPA-certified reclaimers can reclaim."},
+{s:0,q:"What happens when a reclamation facility receives a cylinder of mixed refrigerants?",o:["They must process it at no charge","They may refuse, destroy it and charge a fee, or return it to the owner and charge a fee","They must blend it with virgin refrigerant","They must vent it with EPA approval"],a:1,e:"Reclaimers receiving mixed refrigerant have three legitimate options: refuse to process it, destroy it and charge a disposal fee, or return it to the sender and charge a handling fee. Mixed refrigerant cannot be reclaimed or reused."},
+{s:0,q:"What is the minimum time that service records must be kept for systems with 50+ lbs of refrigerant?",o:["1 year","3 years","5 years","Until the equipment is retired"],a:1,e:"Records for systems containing 50 lbs or more of refrigerant must be maintained for at least 3 years. Records include dates and amounts of refrigerant added, and any leaks discovered and repaired."},
+{s:0,q:"What is the annual leak rate threshold for COMFORT COOLING systems with 50+ lbs of refrigerant?",o:["10%","15%","25%","35%"],a:1,e:"The EPA mandatory repair threshold for comfort cooling equipment (commercial air conditioning) is 15% annual leak rate. Above this, repair must begin within 30 days."},
+{s:0,q:"What is the annual leak rate threshold for COMMERCIAL REFRIGERATION with 50+ lbs of refrigerant?",o:["15%","25%","35%","50%"],a:2,e:"Commercial and industrial process refrigeration has a 35% annual leak rate threshold before mandatory repair. This is higher than comfort cooling because of the complexity and cost of large commercial refrigeration systems."},
+{s:0,q:"After discovering a leak that exceeds the threshold, how long does a technician have to repair it?",o:["15 days","30 days, with one 30-day extension possible","60 days with no extension","90 days"],a:1,e:"Leaks must be repaired within 30 days. If parts must be ordered, one 30-day extension can be granted (60 days total). If repair is not possible, the equipment must be retired and refrigerant recovered."},
+{s:0,q:"What is the CORRECT order of refrigerant flow through the basic refrigeration cycle?",o:["Compressor → Condenser → Metering Device → Evaporator","Evaporator → Condenser → Compressor → Metering Device","Condenser → Compressor → Evaporator → Metering Device","Compressor → Evaporator → Condenser → Metering Device"],a:0,e:"Refrigerant flows: Compressor (compresses vapor) → Condenser (rejects heat, condenses to liquid) → Metering Device (drops pressure) → Evaporator (absorbs heat, boils to vapor) → back to Compressor."},
+{s:0,q:"Which component is at the END of the liquid line?",o:["Condenser","Compressor","Evaporator","Expansion (metering) device"],a:3,e:"The liquid line carries high-pressure liquid refrigerant from the condenser to the metering device. The metering device is at the end of the liquid line — it's the dividing point between the high side and low side."},
+{s:0,q:"Refrigerant in the suction line is in what state?",o:["Hot vapor","Cold vapor (superheated)","Warm liquid","Cold liquid"],a:1,e:"The suction line carries low-pressure, low-temperature refrigerant vapor from the evaporator to the compressor. It is a cold, superheated vapor — heated above its saturation temperature to protect the compressor."},
+{s:0,q:"What is 'latent heat'?",o:["Heat that raises temperature of a substance","Heat absorbed or released during a change of state with no temperature change","Total heat content of a substance","Heat measured in BTUs per pound"],a:1,e:"Latent heat changes the STATE of a substance (liquid to vapor, or solid to liquid) without changing its temperature. The evaporator uses latent heat to boil refrigerant, absorbing heat from the cooled space."},
+{s:0,q:"Which gas is used to pressure-test a system for leaks?",o:["Oxygen","Compressed air","Hydrogen","Dry nitrogen"],a:3,e:"Dry nitrogen is used for pressure testing because it is inert, dry, and safe. Never use oxygen (explosion risk with oil), hydrogen (flammable), or air (moisture, combustion risk)."},
+{s:0,q:"Recovery cylinders must meet which DOT specification?",o:["DOT-2A or DOT-2B","DOT-4BA or DOT-4BW","DOT-5A or DOT-5B","Any steel cylinder is acceptable"],a:1,e:"Recovery cylinders must be DOT-certified, typically DOT-4BA or DOT-4BW. These designations specify construction standards and pressure ratings for safe refrigerant transport and storage."},
+{s:0,q:"What is the maximum percentage a recovery cylinder should be filled by weight?",o:["70%","80%","90%","100%"],a:1,e:"Recovery cylinders should not be filled beyond 80% of rated capacity by weight. Overfilling leaves no vapor space; if the cylinder warms, liquid expands and the cylinder can rupture explosively."},
+{s:0,q:"Refrigerant cylinders should be stored in which position?",o:["Horizontal","Vertical with valve end down","Vertical with valve end up","Any position is acceptable"],a:2,e:"Refrigerant cylinders must be stored upright with the valve end up. This prevents liquid refrigerant from sitting in the valve, which can damage it and cause uncontrolled release when the valve is opened."},
+{s:0,q:"What color is an R-22 refrigerant cylinder?",o:["Pink","White","Light green","Light blue"],a:2,e:"R-22 cylinders are light green. R-410A is pink/rose, R-134a is light blue, R-12 is white. Recognizing cylinder colors is an exam topic."},
+{s:0,q:"What color is an R-410A refrigerant cylinder?",o:["Light green","White","Light blue","Pink / Rose"],a:3,e:"R-410A cylinders are pink or rose colored. This distinguishes them from R-22 (light green) and R-134a (light blue)."},
+{s:0,q:"What must NEVER be mixed in the same recovery cylinder?",o:["Different brands of the same refrigerant","Different refrigerant types","Oil and refrigerant","Liquid and vapor refrigerant"],a:1,e:"Different refrigerant types must never be mixed in the same recovery cylinder. The resulting unknown blend cannot be identified, reclaimed, or reused and must be destroyed at significant cost."},
+{s:0,q:"What is a 'de minimis' release?",o:["A deliberate release approved by the EPA","A small, unavoidable release during good-faith repair operations — not a violation","Any release under 1 lb","A release from a small appliance only"],a:1,e:"De minimis releases are the small, incidental amounts of refrigerant that are unavoidably released during normal, good-faith repair and maintenance. These are not prohibited. Deliberately venting refrigerant is always a violation."},
+{s:0,q:"What does 'ARI Standard 700' refer to?",o:["The maximum allowable leak rate for commercial systems","The purity standard that reclaimed refrigerant must meet","The minimum recovery efficiency for Type I equipment","Cylinder pressure testing requirements"],a:1,e:"ARI (now AHRI) Standard 700 is the purity specification that reclaimed refrigerant must meet before being resold. Refrigerant that meets ARI 700 is equivalent in quality to new virgin refrigerant."},
+{s:0,q:"Low-loss fittings on recovery equipment are required to do what?",o:["Speed up the recovery process","Prevent refrigerant from escaping when hoses are disconnected","Filter oil from recovered refrigerant","Measure recovery cylinder weight"],a:1,e:"Low-loss fittings are automatic shut-off valves on hose connections that close when disconnected, preventing refrigerant release. All recovery equipment manufactured after November 1993 must incorporate them."},
+{s:0,q:"Zeotropic refrigerant blends must be charged into a system as:",o:["Liquid only, through the high side","Vapor only, through the low side","Either liquid or vapor — no restriction","Liquid through high side, vapor through low side simultaneously"],a:1,e:"Zeotropic blends must be charged as vapor only. Charging as liquid causes fractionation — lower-boiling components are drawn preferentially, changing the remaining mixture ratio and degrading system performance."},
+{s:0,q:"What is the purpose of a filter-drier in a refrigerant system?",o:["Filter oil from the refrigerant","Remove moisture and solid contaminants from the refrigerant circuit","Measure refrigerant flow rate","Control refrigerant pressure"],a:1,e:"Filter-driers contain desiccant (molecular sieve or silica gel) that absorbs moisture and filter media that catches solid particles. They protect the system from acid formation (moisture + refrigerant = acid), ice blockage, and wear."},
+{s:0,q:"The receiver in a refrigerant system is located on which side?",o:["Low side — between evaporator and compressor","High side — between condenser and metering device","Both sides simultaneously","Between the compressor and condenser"],a:1,e:"The liquid receiver is on the HIGH side, between the condenser outlet and the metering device. It stores liquid refrigerant. This is a common exam trick — the receiver is NOT part of the low side."},
+{s:0,q:"How are service records inspected under Section 608?",o:["Must be submitted to EPA annually","Must be available for EPA inspection upon request","Only inspected after a complaint","Only required if the system uses CFCs"],a:1,e:"Records for 50+ lb systems must be maintained and available for EPA inspection upon request. They do not need to be submitted proactively but must be produced when the EPA asks."},
+{s:0,q:"Sale of CFC and HCFC refrigerants was restricted to certified technicians starting on what date?",o:["November 14, 1992","November 14, 1994","November 14, 1996","November 14, 1998"],a:1,e:"Beginning November 14, 1994, the sale of CFC and HCFC refrigerants in containers over 20 lbs was restricted to EPA-certified technicians. Later rules extended restrictions to containers over 2 lbs."},
+{s:0,q:"What is the ASHRAE safety classification for R-410A?",o:["A1 — lower toxicity, non-flammable","A2L — lower toxicity, slightly flammable","B1 — higher toxicity, non-flammable","A3 — lower toxicity, highly flammable"],a:0,e:"R-410A is ASHRAE A1 — 'A' for lower toxicity, '1' for no flame propagation (non-flammable at standard test conditions). R-22 is also A1."},
+{s:0,q:"What does subcooling ensure in a refrigerant system?",o:["Adequate compressor cooling","Only liquid refrigerant (no vapor) enters the metering device","The condenser rejects heat efficiently","The suction line stays cold"],a:1,e:"Subcooling ensures the liquid refrigerant in the liquid line is cooled below its saturation temperature, preventing flash gas from forming before the metering device. Flash gas reduces metering device capacity and system efficiency."},
+{s:0,q:"What safety hazard can occur when brazing near a system containing CFC or HCFC refrigerant?",o:["The refrigerant becomes more toxic","Phosgene gas can form from refrigerant contact with open flame","The system pressure rises dangerously","The refrigerant becomes flammable"],a:1,e:"CFCs and HCFCs decompose at high temperatures or in open flame to produce phosgene — an extremely toxic gas. Always purge the system with nitrogen and ventilate before any brazing or welding."},
+{s:0,q:"Moisture in a refrigerant system can cause:",o:["Higher system efficiency","Acid formation, ice blockage at the metering device, and compressor damage","Lower head pressure","Reduced superheat"],a:1,e:"Moisture reacts with refrigerant to form hydrofluoric and hydrochloric acids, corroding internal surfaces and damaging motor windings. Moisture can also freeze at the metering device, causing system failure."},
+{s:0,q:"What is a triple evacuation?",o:["Pulling vacuum three times without interruption","Pull vacuum, break with nitrogen, pull again — repeated three times — very effective for moisture removal","Using three vacuum pumps at once","Evacuating three separate circuits simultaneously"],a:1,e:"Triple evacuation: pull deep vacuum → break with dry nitrogen to ~1 psig → let stand → pull vacuum again → break with nitrogen → pull final deep vacuum. Highly effective at removing moisture from the system."},
+
+// ── TYPE I (s:1) ──
+{s:1,q:"How is a 'small appliance' defined under EPA 608 Type I?",o:["Any system using R-134a or R-12","Fully manufactured, hermetically sealed systems with 5 lbs or less of refrigerant","Any system under 1 ton of cooling capacity","Window A/C units only"],a:1,e:"Type I covers fully manufactured (factory-sealed) hermetic systems containing 5 lbs or less of refrigerant. Examples: household refrigerators, window A/C, dehumidifiers, water coolers, vending machines."},
+{s:1,q:"What type of compressor is used in small appliances?",o:["Open-drive compressor","Semi-hermetic (serviceable) compressor","Welded hermetic compressor","Centrifugal compressor"],a:2,e:"Small appliances use welded hermetic compressors — permanently sealed in a welded steel shell with no service access. If the compressor fails, the entire unit must be replaced."},
+{s:1,q:"When is system-dependent (passive) recovery appropriate for a small appliance?",o:["Always — passive recovery is preferred for all small appliances","Only when the system compressor is functioning","Only when the system is completely empty","Only for R-12 systems"],a:1,e:"System-dependent recovery uses the appliance's own compressor to push refrigerant into the recovery cylinder. It can only be used when the appliance's compressor is functional."},
+{s:1,q:"What must be used when recovering refrigerant from a small appliance with a NON-FUNCTIONING compressor?",o:["Passive (system-dependent) recovery — same as normal","Self-contained recovery equipment with its own compressor","The refrigerant can be vented since the system cannot be recovered","Wait until the compressor is repaired"],a:1,e:"If the appliance's compressor doesn't work, passive recovery is impossible. A self-contained recovery machine (with its own compressor) must be used to extract the refrigerant."},
+{s:1,q:"What recovery level is required for small appliances with an OPERATIVE compressor?",o:["0 in Hg (atmospheric)","4 inches Hg vacuum","90% of charge","25 in Hg vacuum"],a:1,e:"For small appliances with a working compressor (before or after 11/15/93), recovery equipment must achieve 4 inches Hg vacuum before the system can be opened."},
+{s:1,q:"What recovery efficiency is required for small appliances with NON-OPERATIVE compressors?",o:["80% of charge","90% of charge","95% of charge","4 inches Hg vacuum"],a:1,e:"When the system compressor is not operative (or the system is leaky), at least 90% of the refrigerant charge must be recovered before opening or disposing of the appliance."},
+{s:1,q:"Which refrigerant replaced R-12 in new domestic refrigerators?",o:["R-22","R-410A","R-134a","R-404A"],a:2,e:"R-134a (an HFC) replaced R-12 in domestic refrigerators and freezers after R-12 phase-out. It has zero ODP (unlike R-12's ODP of 1.0) and similar thermodynamic characteristics."},
+{s:1,q:"What oil type is required in R-134a systems?",o:["Mineral oil","Alkylbenzene (AB) oil","PAG oil","POE (polyolester) oil"],a:3,e:"R-134a requires POE (polyolester) oil. It is not miscible with mineral oil. POE is hygroscopic — it rapidly absorbs atmospheric moisture — so systems must be kept sealed during service."},
+{s:1,q:"What was the oil type used in R-12 systems?",o:["POE oil","PAG oil","Mineral oil","Alkylbenzene oil"],a:2,e:"R-12 systems used mineral oil, which is miscible with R-12. When retrofitting to R-134a, all mineral oil must be flushed and replaced with POE oil since R-134a is not compatible with mineral oil."},
+{s:1,q:"What is a piercing valve (saddle valve) used for?",o:["Adjust system pressure","Create a service access port on a sealed system by clamping on and puncturing the tubing","Release pressure from the high side safely","Check oil level in the compressor"],a:1,e:"Piercing/saddle valves clamp onto copper refrigerant tubing and puncture it, creating a temporary service port. Used on hermetically sealed small appliances that have no built-in Schrader valves."},
+{s:1,q:"Must refrigerant be recovered from a small appliance before disposal?",o:["Only if it contains more than 1 lb","Only if it contains a CFC or HCFC refrigerant","Yes — all refrigerant must be recovered before disposal, regardless of amount","No — small amounts can be vented during disposal"],a:2,e:"ALL refrigerant must be recovered before any appliance is disposed of, regardless of the refrigerant type or quantity. There is no minimum quantity exemption for disposal."},
+{s:1,q:"What is the metering device in most small appliances?",o:["Thermostatic expansion valve (TXV)","Electronic expansion valve (EEV)","Capillary tube","Float valve"],a:2,e:"Small appliances use capillary tubes — fixed-restriction, small-diameter tubes of precise length that create a pressure drop through restriction. They're inexpensive, reliable, and have no moving parts."},
+{s:1,q:"What does 'compressor short cycling' indicate in a small appliance?",o:["Normal energy-saving operation","The compressor turns on and off more frequently than normal — often indicates a refrigerant leak, dirty condenser, or control problem","The compressor is running backward","The system has too much refrigerant"],a:1,e:"Short cycling means the compressor starts and stops more often than designed. Common causes: low refrigerant charge (leak), dirty condenser coil, faulty thermostat, or incorrect refrigerant charge. It reduces efficiency and can damage the compressor."},
+{s:1,q:"What happens to refrigerant in a small appliance during the defrost cycle?",o:["It continues circulating normally","Compressor stops; refrigerant migrates to the compressor crankcase (now the coldest point)","It vaporizes completely","Pressure increases to maximum"],a:1,e:"During defrost, the compressor stops and the heater runs. Refrigerant migrates to the coldest spot — the compressor crankcase. This is normal for hermetically sealed systems and is why small appliances should have crankcase heaters."},
+{s:1,q:"What does it indicate if the condenser coil on a running refrigerator feels only slightly warm?",o:["Normal operation — condensers don't get hot","Low refrigerant charge or non-functioning compressor — condenser should be noticeably warm","Overcharge of refrigerant","Very efficient operation"],a:1,e:"The condenser should be warm to hot during operation as it rejects heat from the refrigeration cycle. A barely-warm condenser suggests the compressor isn't running, low refrigerant, or inadequate heat rejection."},
+{s:1,q:"What must be done when a small appliance's compressor burns out before recharging?",o:["Simply replace compressor and recharge","Replace compressor, thoroughly flush system, install new filter-drier(s), use fresh POE oil, then recharge","Add extra filter-drier and recharge","The system can be reused as-is after replacing the compressor"],a:1,e:"Compressor burnout produces acids and carbon deposits throughout the system. The system must be thoroughly flushed, all filter-driers replaced, fresh POE oil used, and only then recharged. Skipping these steps destroys the new compressor."},
+{s:1,q:"R-134a at 0°F operates at approximately what pressure?",o:["25 psig","0 psig (atmospheric)","Below atmospheric — about 0.5 in Hg vacuum","50 psig"],a:2,e:"R-134a at 0°F has a saturation pressure of approximately -0.5 psig — slightly below atmospheric, operating in a mild vacuum. This means domestic freezers run in vacuum conditions, making air infiltration a concern with leaky door seals."},
+{s:1,q:"What is the purpose of the moisture indicator in a sight glass?",o:["Monitor refrigerant charge level","Show oil level in the system","Indicate moisture contamination — changes color when moisture is present","Show superheat level"],a:2,e:"Sight glass moisture indicators change color based on moisture content — typically green (dry) to yellow or blue to pink, depending on the indicator chemistry. Green or blue means dry and acceptable; yellow or pink indicates moisture contamination."},
+{s:1,q:"What is the approximate refrigerant charge in a typical household refrigerator?",o:["Less than 1 oz","1 to 8 oz","1 to 3 lbs","Exactly 5 lbs"],a:1,e:"Most household refrigerators contain approximately 1 to 8 oz of refrigerant — well within the 5 lb Type I threshold. These small amounts still require recovery before disposal."},
+{s:1,q:"Recovery equipment used for small appliances must be certified by whom?",o:["EPA directly","The refrigerant manufacturer","An EPA-approved third-party testing organization (such as UL or ETL)","The equipment owner"],a:2,e:"Recovery equipment must be certified by an EPA-approved independent testing organization (such as UL or ETL) to verify it achieves the required recovery efficiency standards before being sold for use on refrigerant systems."},
+{s:1,q:"What is the PRIMARY safety concern when servicing any refrigerant system in an enclosed space?",o:["Fire from refrigerant ignition","Refrigerant displacing oxygen, creating asphyxiation hazard","UV radiation from refrigerants","Refrigerant becoming acidic at room temperature"],a:1,e:"All refrigerants can displace oxygen in confined spaces. Even non-toxic, non-flammable refrigerants like R-134a can cause asphyxiation if they displace enough oxygen. Always ensure adequate ventilation."},
+{s:1,q:"What overcharge symptom would appear in a small appliance?",o:["Low suction pressure, inadequate cooling","High condensing pressure, compressor overload, possible liquid floodback, reduced cooling","Frost on the suction line only","Low discharge temperature"],a:1,e:"Overcharging increases condensing pressure, overloads the compressor, can cause liquid refrigerant to enter the compressor (liquid slugging), and actually reduces cooling efficiency. Always charge to manufacturer's nameplate weight specification."},
+{s:1,q:"What is the BEST method to determine correct charge for a small appliance?",o:["Suction pressure measurement","Discharge temperature","Charging by weight per manufacturer's nameplate specification","Frost pattern observation"],a:2,e:"The most accurate method for small appliances is charging by weight per the manufacturer's specification. Many small appliances have no service ports for pressure measurement, making weight the only reliable method."},
+{s:1,q:"What happens to POE oil if it's exposed to air during service?",o:["It becomes more viscous","It absorbs moisture rapidly from the atmosphere (hygroscopic)","It changes color indicating contamination","It evaporates quickly"],a:1,e:"POE oil is highly hygroscopic — it absorbs atmospheric moisture rapidly. Even brief exposure during service can contaminate the oil with enough moisture to cause problems. Keep all containers sealed and systems exposed as briefly as possible."},
+{s:1,q:"A window A/C unit uses R-22. Before repair, the technician must:",o:["Vent the R-22 since it is being phased out","Recover the R-22 into an approved recovery cylinder before opening the system","Replace it with R-410A directly","Get a special permit from the EPA"],a:1,e:"All refrigerant must be recovered before opening any system, regardless of refrigerant type or phase-out status. R-22 still in service must be recovered — it cannot be legally vented."},
+
+// ── TYPE II (s:2) ──
+{s:2,q:"Type II certification covers which equipment?",o:["Small appliances with less than 5 lbs","High-pressure and very high-pressure appliances with more than 5 lbs, except small appliances","Low-pressure centrifugal chillers","Motor vehicle air conditioning only"],a:1,e:"Type II covers high-pressure and very high-pressure appliances (except small appliances and MVACs) that contain more than 5 lbs of refrigerant — residential A/C, heat pumps, commercial refrigeration, etc."},
+{s:2,q:"R-410A operates at approximately how much higher pressure than R-22?",o:["10–20% higher","25–35% higher","50% higher","About 1.6 times R-22 pressure"],a:3,e:"R-410A operates at approximately 1.6 times the pressure of R-22. At 45°F evaporator temperature: R-22 ≈ 76 psig low side; R-410A ≈ 116 psig low side. R-22 equipment cannot simply be converted to R-410A."},
+{s:2,q:"What oil type is required in R-410A systems?",o:["Mineral oil","Alkylbenzene oil","PAG oil","POE (polyolester) oil"],a:3,e:"All HFC refrigerants including R-410A require POE oil because HFCs are not miscible with mineral oil. POE is hygroscopic — minimize air exposure during service."},
+{s:2,q:"What evacuation level is required before opening a high-pressure system with MORE than 200 lbs, manufactured AFTER 11/15/93?",o:["4 in Hg","10 in Hg","15 in Hg","25 in Hg"],a:3,e:"For high-pressure systems with more than 200 lbs manufactured after November 15, 1993, recovery equipment must achieve 25 inches Hg vacuum before the system is opened."},
+{s:2,q:"What evacuation level is required for a high-pressure system with LESS than 200 lbs, manufactured AFTER 11/15/93?",o:["4 in Hg","10 in Hg","23 in Hg","25 in Hg"],a:1,e:"For high-pressure systems with less than 200 lbs manufactured after November 15, 1993, recovery equipment must achieve 10 inches Hg vacuum."},
+{s:2,q:"What is the evacuation requirement for VERY HIGH PRESSURE appliances?",o:["25 in Hg vacuum","10 in Hg vacuum","4 in Hg vacuum","0 in Hg — atmospheric pressure (no evacuation required)"],a:3,e:"Very high pressure appliances (using refrigerants like R-503, R-13, R-23) require only 0 in Hg — meaning the system just needs to reach atmospheric pressure before opening. No deep vacuum is required."},
+{s:2,q:"A comfort cooling system holds 80 lbs of R-22. The technician added 15 lbs over the last 12 months. What is the annual leak rate?",o:["10.7%","15%","18.75%","25%"],a:2,e:"Annual leak rate = (15 ÷ 80) × 100 = 18.75%. Since 18.75% exceeds the 15% comfort cooling threshold, mandatory repair is required within 30 days."},
+{s:2,q:"What is a 'pumpdown' in a high-pressure refrigeration system?",o:["Using a vacuum pump to evacuate the system","Running the compressor with the king valve closed to move refrigerant from the low side into the receiver","Recovering all refrigerant from the system","Lowering suction pressure to check for leaks"],a:1,e:"Pumpdown moves refrigerant from the low-side into the receiver by running the compressor with the king valve (receiver outlet valve) closed. Allows low-side service with minimal recovery needed."},
+{s:2,q:"What happens to refrigerant as it passes through the metering device?",o:["Pressure increases and temperature rises","Pressure drops, temperature drops, and some liquid flashes to vapor","It converts entirely to vapor","Only temperature changes — pressure stays constant"],a:1,e:"As refrigerant passes through the metering device, pressure drops sharply. Some liquid flashes to vapor (creating flash gas), and the remaining liquid drops in temperature — ready to absorb heat in the evaporator."},
+{s:2,q:"How should R-407C (a zeotropic blend) be charged into a system?",o:["Always as liquid through the high-side service port","Always as vapor through the low-side service port","Either as liquid or vapor — no restriction for zeotropic blends","Only during system shutdown"],a:1,e:"R-407C is a zeotropic blend and must be charged as vapor only. Charging as liquid causes fractionation — components with lower boiling points are drawn preferentially, changing the remaining blend ratio and degrading performance."},
+{s:2,q:"What is the purpose of the TXV (thermostatic expansion valve)?",o:["Control compressor speed","Meter refrigerant into the evaporator based on suction line superheat","Control head pressure","Monitor refrigerant level"],a:1,e:"The TXV regulates refrigerant flow into the evaporator based on the superheat it senses in the suction line. When superheat rises (evaporator needs more refrigerant), the TXV opens; when superheat falls, it closes."},
+{s:2,q:"What is indicated by high suction pressure AND high discharge pressure in a high-pressure system?",o:["Low refrigerant charge","Non-condensable gases in the system","Overcharge of refrigerant","Plugged liquid line"],a:2,e:"Both high suction and high discharge pressure with above-normal subcooling suggests overcharge. The excess refrigerant crowds the condenser, raising head pressure, and floods back to the suction side, raising suction pressure."},
+{s:2,q:"What is the purpose of the crankcase heater on a compressor?",o:["Warm the oil for easier starting in cold weather only","Prevent refrigerant from migrating into and dissolving in the oil during off cycles — prevents liquid slugging on restart","Keep the compressor above freezing","Emergency backup heating"],a:1,e:"Crankcase heaters prevent refrigerant migration during off cycles. In cold weather, refrigerant migrates to the compressor (now the coldest part), dissolves in oil, and when the compressor restarts, it flashes out — causing liquid slugging."},
+{s:2,q:"What causes 'compressor surge' concern in high-pressure scroll or centrifugal compressors?",o:["Low discharge temperature","Very high compression ratio causing flow instability","Low ambient temperature","Overcharge of refrigerant"],a:1,e:"High compression ratios (when discharge pressure is very high relative to suction) cause instability in dynamic compressors. In centrifugal compressors specifically, surge causes violent flow reversal and mechanical damage."},
+{s:2,q:"What is 'approach temperature' in a condenser?",o:["Temperature of refrigerant leaving the condenser","Difference between condensing refrigerant temperature and entering air/water temperature — indicates heat transfer efficiency","Minimum outdoor temperature for operation","Temperature difference between high and low side"],a:1,e:"Approach temperature = condensing temperature - entering air (or water) temperature. High approach = reduced heat transfer from fouled coils, non-condensable gases, or inadequate airflow. Lower approach = more efficient condenser."},
+{s:2,q:"After a compressor burnout, what must be done before recharging?",o:["Just replace the compressor and recharge","Replace compressor, flush system, install new filter-drier(s), replace oil with fresh POE, then recharge","Only replace the filter-drier, then recharge","Nothing special — burnouts are self-cleaning"],a:1,e:"Burnouts contaminate the system with acids and carbon. Must: replace compressor, flush all contaminated refrigerant and oil from the system, install multiple new filter-driers, use fresh POE oil, verify acid levels, then recharge."},
+{s:2,q:"R-22 production for use in new equipment was banned in the US after which year?",o:["2000","2010","2015","2020"],a:1,e:"R-22 could not be used in new equipment after January 1, 2010. R-22 for servicing existing equipment continued until January 1, 2020, when all domestic production and import was prohibited."},
+{s:2,q:"What is the purpose of 'sweep purging' nitrogen through refrigerant piping?",o:["Test for leaks under pressure","Flow dry nitrogen through during or after brazing to prevent oxidation scaling and remove air/moisture before evacuation","Purge refrigerant from the system safely","Clean the condenser coil"],a:1,e:"Sweep purging during brazing prevents copper oxide scale formation inside the piping and removes air and moisture. This keeps the internal surfaces clean and dry before evacuation and charging."},
+{s:2,q:"What indicates excessive subcooling in a high-pressure system?",o:["System is running efficiently","Low refrigerant charge","Possible overcharge of refrigerant or a restriction at the condenser outlet","High ambient temperature"],a:2,e:"Excessive subcooling (well above the normal 10–20°F) usually indicates refrigerant overcharge (condenser flooding with extra liquid) or a restriction near the condenser outlet. Normal subcooling is 10–20°F."},
+{s:2,q:"What is a 'king valve' and what is it used for?",o:["Pressure relief valve on the high side","Service valve at the outlet of the liquid receiver — used to isolate the receiver and perform pumpdowns","The main discharge valve on the compressor","A valve that controls refrigerant flow to the condenser"],a:1,e:"The king valve is located at the liquid receiver outlet. Closing it isolates all refrigerant in the receiver, allowing pumpdown of the low side for service. It's also called the receiver outlet valve."},
+{s:2,q:"What is flash gas and why is it problematic?",o:["Gas in the discharge line — normal and expected","Refrigerant vapor that forms in the liquid line before the metering device — reduces metering device capacity and system efficiency","Gas produced by compressor valve leakage","Hot vapor in the condenser inlet — always present"],a:1,e:"Flash gas forms when liquid refrigerant in the liquid line partially vaporizes due to pressure drop or heat gain. At the metering device, flash gas reduces capacity because it's already vapor — it can't absorb more heat in the evaporator."},
+{s:2,q:"When adding R-22 to an operating system, refrigerant should be added as:",o:["Liquid only through the high-side service port","Vapor through the low-side service port while the system is running","Liquid through the low side while the system is running","Refrigerant cannot be added to an operating system"],a:1,e:"R-22 (single component) can be added as vapor through the low-side service port while operating. Adding liquid directly to an operating low side risks liquid slugging the compressor. Never add liquid to the suction side of a running system."},
+
+// ── TYPE III (s:3) ──
+{s:3,q:"Type III certification covers which equipment?",o:["High-pressure systems above 300 psig","Low-pressure systems where refrigerant operates below atmospheric pressure","Small appliances with less than 5 lbs","All systems using ammonia"],a:1,e:"Type III covers low-pressure appliances — those using refrigerants that operate below atmospheric pressure at normal evaporator conditions. Primarily large centrifugal chillers using R-11, R-123, or R-134a."},
+{s:3,q:"Why do low-pressure systems operate below atmospheric pressure (in vacuum)?",o:["To prevent refrigerant leaks from escaping","Their refrigerants have boiling points above room temperature at atmospheric pressure — pressure must be reduced to lower the boiling point for refrigeration use","To reduce compressor power consumption","To prevent moisture from entering the system"],a:1,e:"R-11 boils at 74.7°F at atmospheric pressure. To boil at 38°F (useful chilled water temperature), pressure must be reduced to below atmospheric — creating a vacuum in the evaporator. This is the operating principle of low-pressure refrigeration."},
+{s:3,q:"What is the primary type of equipment using low-pressure refrigerants?",o:["Household refrigerators","Window air conditioners","Large centrifugal chillers","Walk-in commercial coolers"],a:2,e:"Low-pressure refrigerants (R-11, R-123, R-134a in larger systems) are used almost exclusively in large centrifugal chillers — water-cooled systems that chill water for large commercial buildings and industrial processes."},
+{s:3,q:"What is the main hazard of air infiltrating a low-pressure system?",o:["Air is flammable and can cause explosion","Air is a non-condensable gas that raises head pressure, reduces efficiency, and can cause surge — it also introduces moisture","Air lowers suction pressure dangerously","Air reacts with refrigerant to form explosive compounds"],a:1,e:"Air in a low-pressure system is a non-condensable gas — it doesn't condense at normal operating conditions. It accumulates in the condenser, raising head pressure, reducing efficiency, and can trigger compressor surge. Air also contains moisture."},
+{s:3,q:"What is the purpose of the purge unit on a centrifugal chiller?",o:["Add refrigerant to the system","Remove non-condensable gases (primarily air) that infiltrate through seals and joints","Recover refrigerant before service","Monitor refrigerant level"],a:1,e:"The purge unit automatically removes non-condensable gases (mainly air and water vapor) from low-pressure systems. It separates refrigerant from air and exhausts the air. High-efficiency purge units also recover refrigerant from the exhaust stream."},
+{s:3,q:"Before opening a low-pressure system for service, what evacuation level must be reached?",o:["10 psig (positive pressure)","25 in Hg vacuum","4 in Hg vacuum","25 mm Hg absolute pressure (≈ 29 in Hg vacuum)"],a:3,e:"Low-pressure systems must be evacuated to 25 mm Hg absolute pressure — approximately 29 inches Hg vacuum — before being opened for service. This is the EPA requirement for Type III equipment."},
+{s:3,q:"Why must water continue circulating through chiller tubes DURING refrigerant recovery?",o:["To maintain system pressure during recovery","To prevent the water in the tubes from freezing as refrigerant pressure drops and temperatures fall","To cool the recovery machine","To test the chilled water pump"],a:1,e:"As refrigerant is recovered and pressure drops, temperatures fall dramatically. Without circulating water to keep the tubes from freezing, water inside can freeze and rupture the tubes — an extremely costly failure."},
+{s:3,q:"What is the recovery equipment high-pressure cutout setting for Type III systems?",o:["5 psig","10 psig","15 psig","25 psig"],a:1,e:"Recovery equipment for low-pressure systems must have its high-pressure cutout set at 10 psig. This prevents overpressurizing the chiller shell beyond the rupture disc rating (typically 15 psig). The 5 psig margin is intentional."},
+{s:3,q:"Approximately how much refrigerant vapor remains in a 350-ton R-11 chiller at 0 psig after liquid recovery?",o:["5 lbs","25 lbs","100 lbs","500 lbs"],a:2,e:"Even after all liquid refrigerant is recovered, a 350-ton R-11 chiller at 0 psig still contains approximately 100 pounds of refrigerant vapor. This vapor must also be recovered — it represents a significant quantity."},
+{s:3,q:"When removing oil from a low-pressure system, what temperature must the oil reach?",o:["100°F","130°F","150°F","180°F"],a:1,e:"Oil must be heated to at least 130°F before removal from a low-pressure system. This reduces viscosity for easier removal and drives dissolved refrigerant out of the oil before it's drained and disposed of."},
+{s:3,q:"Refrigerant recovery from an R-11 or R-123 chiller starts with recovery of what?",o:["Vapor first, then liquid","Liquid first, then vapor","Only vapor — R-11 is always vapor at operating conditions","The order doesn't matter"],a:1,e:"Recovery from low-pressure systems starts with liquid removal (drawn from the evaporator sump), followed by vapor recovery. Liquid makes up most of the charge mass — removing it first is most efficient."},
+{s:3,q:"What is the approximate saturation temperature of R-11 at atmospheric pressure?",o:["-40°F","32°F","74.7°F","100°F"],a:2,e:"R-11 boils at approximately 74.7°F at atmospheric pressure. This high boiling point at atmospheric is why these systems operate in vacuum — to reduce the boiling point to useful refrigeration temperatures."},
+{s:3,q:"What is 'compressor surge' in a centrifugal chiller?",o:["Normal speed variation during load changes","Rapid, oscillating flow reversal through the impeller when operating near the surge line — causes vibration and mechanical damage","A normal startup phenomenon","The compressor running at maximum speed"],a:1,e:"Surge occurs when the centrifugal compressor operates outside its stable range — when pressure differential is too high relative to gas flow. Refrigerant flow reverses rapidly and violently, causing vibration, noise, and potential mechanical damage."},
+{s:3,q:"What does HIGH purge unit runtime indicate on a centrifugal chiller?",o:["The chiller is operating efficiently","Significant air infiltration — indicating system leaks that need investigation and repair","The refrigerant needs to be replaced","The purge unit is malfunctioning"],a:1,e:"Excessive purge unit operation hours indicate significant air leakage into the system. The purge log is an important diagnostic tool — high purge hours prompt a leak investigation of seals, joints, and the chiller shell."},
+{s:3,q:"What is used to pressure-test a low-pressure system for leaks?",o:["High-pressure nitrogen at 200 psig","Controlled hot water (to raise pressure slightly above atmospheric) or dry nitrogen at low pressure (under 10 psig)","R-134a refrigerant as a trace gas","Standard compressed air from the shop"],a:1,e:"Low-pressure chillers can't handle high pressure. Use controlled hot water to raise pressure above atmospheric, or dry nitrogen at low pressure (not to exceed 10 psig — below the 15 psig rupture disc). Electronic detectors or UV dye then find the leak."},
+{s:3,q:"What is a 'flooded evaporator' in a centrifugal chiller?",o:["An evaporator that has flooded with water from a leak","Shell-and-tube design where liquid refrigerant fills the shell and chilled-water tubes pass through it","An evaporator at maximum ice buildup","An evaporator operating above its rated capacity"],a:1,e:"In a flooded evaporator (common in centrifugal chillers), liquid refrigerant fills the shell around the chilled-water tubes. Refrigerant boils around the outside of the tubes, absorbing heat from the water passing through the tubes."},
+{s:3,q:"Why is moisture especially dangerous in low-pressure systems?",o:["Moisture is only dangerous in high-pressure systems","Moisture can freeze causing equipment damage, forms acids with refrigerant, attacks bearings and tubes, and is difficult to remove from low-pressure systems","Moisture increases refrigerant efficiency","Moisture is not more dangerous in low-pressure systems than others"],a:1,e:"Moisture in low-pressure chillers causes: acid formation (from CFC/HCFC decomposition), ice formation inside components, tube erosion, bearing damage, and compressor problems. The low-pressure design makes moisture removal more difficult than in high-pressure systems."},
+{s:3,q:"What does 'kW/ton' measure for a centrifugal chiller?",o:["Refrigerant charge per ton of cooling capacity","Electrical input (kilowatts) per ton of cooling output — lower is more efficient","Kilowatts per hour of total runtime","Cooling tons per compressor revolution"],a:1,e:"kW/ton is the standard efficiency metric for chillers. Lower values indicate better efficiency. A modern high-efficiency centrifugal chiller achieves 0.3–0.5 kW/ton. Higher kW/ton means more electricity per ton of cooling delivered."},
+{s:3,q:"The annual leak rate threshold for mandatory repair on low-pressure systems with 50+ lbs is:",o:["10% per year","15% per year","25% per year","35% per year"],a:3,e:"Low-pressure chillers with 50+ lbs of refrigerant are subject to the 35% annual leak rate threshold — the same as other commercial/industrial process refrigeration. Above 35%, mandatory repair within 30 days is required."},
+{s:3,q:"What special phosgene hazard is associated with R-11?",o:["R-11 produces phosgene when compressed above 200 psig","R-11 (a CFC) decomposes in open flame or high heat to form phosgene, an extremely toxic gas — risk during brazing or welding","R-11 produces phosgene when mixed with water","R-11 always contains trace phosgene from manufacturing"],a:1,e:"R-11 is a CFC. When exposed to open flames or very high heat during brazing/welding, CFCs decompose to form phosgene — a WWI-era chemical weapon and extremely toxic gas. Always purge with nitrogen and ventilate thoroughly before any hot work."},
+{s:3,q:"What do 'variable inlet guide vanes' (VIGV) do in a centrifugal chiller?",o:["Control refrigerant flow through the expansion valve","Pre-swirl refrigerant vapor entering the compressor impeller to modulate capacity and efficiency","Control chilled water flow rate","Monitor compressor bearing temperature"],a:1,e:"Variable inlet guide vanes pre-swirl refrigerant vapor entering the centrifugal impeller. Adjusting their angle modulates compressor capacity and efficiency over a wide load range without changing compressor speed. Modern chillers also use variable frequency drives (VFDs) for additional control."}
+];
+
+// ═══════════════════════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════════════════════
+let currentSection = -1;
+let currentModuleIdx = 0;
+let vocabFilter = 'all';
+let fcCards = [], fcIdx = 0, fcFlipped = false;
+let examQs = [], examAnswers = [], examIdx = 0, examTimer = null, examSecs = 0;
+let examQCount = 25, examSecs_arr = [0,1,2,3];
+let leaveTarget = '';
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+const SECTION_INFO = [
+  {name:'Core — All Technicians', short:'Core', tag:'tag-core', icon:'si-core', iconTxt:'CORE'},
+  {name:'Type I — Small Appliances', short:'Type I', tag:'tag-t1', icon:'si-t1', iconTxt:'T-I'},
+  {name:'Type II — High-Pressure Systems', short:'Type II', tag:'tag-t2', icon:'si-t2', iconTxt:'T-II'},
+  {name:'Type III — Low-Pressure Systems', short:'Type III', tag:'tag-t3', icon:'si-t3', iconTxt:'T-III'},
+];
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showNav(tab) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+tab);
+  if(navEl) navEl.classList.add('active');
+  if(tab==='home') showScreen('screen-home');
+  else if(tab==='learn') { buildLearnList(); showScreen('screen-learn'); }
+  else if(tab==='vocab') { buildVocab(); showScreen('screen-vocab'); }
+  else if(tab==='resources') { buildResources(); showScreen('screen-resources'); }
+}
+
+function init() {
+  // Count questions per section
+  SECTION_INFO.forEach((s,i) => {
+    const n = Q.filter(q=>q.s===i).length;
+    const el = document.getElementById('cnt-'+i);
+    if(el) el.textContent = n+' Qs';
+  });
+  document.getElementById('stat-q').textContent = Q.length;
+  document.getElementById('stat-terms').textContent = VOCAB.length;
+}
+
+// ─ Section detail ─
+function openSection(idx) {
+  currentSection = idx;
+  const s = SECTION_INFO[idx];
+  const n = Q.filter(q=>q.s===idx).length;
+  document.getElementById('sec-title').textContent = s.name;
+  document.getElementById('sec-sub').textContent = n+' practice questions';
+  showScreen('screen-section');
+}
+
+function goLearnSection() {
+  // Find first module for current section
+  const idx = MODULES.findIndex(m=>m.section===currentSection);
+  if(idx>=0){ currentModuleIdx=idx; openModule(idx); showScreen('screen-module'); }
+  else { buildLearnList(); showScreen('screen-learn'); }
+}
+
+// ─ Leave confirm ─
+function confirmLeave(target) {
+  leaveTarget = target;
+  document.getElementById('modal-leave').classList.add('show');
+}
+function closeModal() { document.getElementById('modal-leave').classList.remove('show'); }
+function doLeave() {
+  closeModal(); stopTimer();
+  if(leaveTarget==='section') showScreen('screen-section');
+  else showNav('home');
+}
+
+// ═══════════════════════════════════════════════════════════
+// LEARN — MODULE LIST
+// ═══════════════════════════════════════════════════════════
+function buildLearnList() {
+  const el = document.getElementById('learn-list');
+  const sectionNums = [...new Set(MODULES.map(m=>m.section))];
+  el.innerHTML = '';
+  sectionNums.forEach(sNum=>{
+    const si = SECTION_INFO[sNum];
+    const hdr = document.createElement('div');
+    hdr.className='learn-section-hdr';
+    hdr.innerHTML=`<span class="tag ${si.tag}">${si.short}</span> &nbsp;${si.name}`;
+    el.appendChild(hdr);
+    MODULES.filter(m=>m.section===sNum).forEach((m,i)=>{
+      const card = document.createElement('div');
+      card.className='module-card';
+      const globalIdx = MODULES.indexOf(m);
+      card.innerHTML=`
+        <div class="module-num ${si.icon}" style="font-size:11px">${i+1}</div>
+        <div class="module-info">
+          <div class="module-title">${m.title}</div>
+          <div class="module-sub">${m.sub}</div>
+        </div>
+        <div class="module-arrow">›</div>`;
+      card.onclick=()=>{ currentModuleIdx=globalIdx; openModule(globalIdx); showScreen('screen-module'); };
+      el.appendChild(card);
+    });
+  });
+}
+
+function openModule(idx) {
+  const m = MODULES[idx];
+  document.getElementById('module-title-hdr').textContent = m.title;
+  document.getElementById('module-section-hdr').textContent = SECTION_INFO[m.section].name;
+  document.getElementById('module-reader').innerHTML = m.content;
+  document.getElementById('mod-prev-btn').disabled = idx===0;
+  const nextBtn = document.getElementById('mod-next-btn');
+  if(idx===MODULES.length-1){ nextBtn.textContent='Done ✓'; }
+  else { nextBtn.textContent='Next →'; }
+  window.scrollTo(0,0);
+}
+
+function prevModule() {
+  if(currentModuleIdx>0){ currentModuleIdx--; openModule(currentModuleIdx); }
+}
+function nextModule() {
+  if(currentModuleIdx<MODULES.length-1){ currentModuleIdx++; openModule(currentModuleIdx); }
+  else showScreen('screen-learn');
+}
+
+// ═══════════════════════════════════════════════════════════
+// VOCABULARY
+// ═══════════════════════════════════════════════════════════
+const CAT_LABELS = {core:'Core',t1:'Type I',t2:'Type II',t3:'Type III'};
+const CAT_TAGS = {core:'tag-core',t1:'tag-t1',t2:'tag-t2',t3:'tag-t3'};
+
+function buildVocab() {
+  document.getElementById('vocab-count-lbl').textContent = VOCAB.length+' terms';
+  filterVocab();
+}
+
+function setVocabFilter(f, btn) {
+  vocabFilter = f;
+  document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  filterVocab();
+}
+
+function filterVocab() {
+  const search = (document.getElementById('vocab-search-input').value||'').toLowerCase();
+  const list = document.getElementById('vocab-list');
+  const filtered = VOCAB.filter(v=>{
+    const matchCat = vocabFilter==='all' || v.cat===vocabFilter;
+    const matchSearch = !search || v.term.toLowerCase().includes(search) || v.def.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+  if(filtered.length===0){
+    list.innerHTML='<div class="vocab-empty">No terms match your search.</div>';
+    return;
+  }
+  list.innerHTML = filtered.map((v,i)=>`
+    <div class="vocab-item" onclick="toggleVocab(this)">
+      <div class="vocab-term">
+        <span>${v.term}</span>
+        <span class="tag ${CAT_TAGS[v.cat]} vocab-tag">${CAT_LABELS[v.cat]}</span>
+      </div>
+      <div class="vocab-def">${v.def}</div>
+      <span class="vocab-chevron">▾</span>
+    </div>`).join('');
+}
+
+function toggleVocab(el) {
+  el.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// RESOURCES
+// ═══════════════════════════════════════════════════════════
+function buildResources() {
+  const el = document.getElementById('resources-body');
+  el.innerHTML = RESOURCES.map((r,i)=>`
+    <div class="res-card" id="res-${i}">
+      <div class="res-card-header" onclick="toggleRes(${i})">
+        <span class="res-card-icon">${r.icon}</span>
+        <span class="res-card-title">${r.title}</span>
+        <span style="color:var(--text3);font-size:18px;margin-left:auto">›</span>
+      </div>
+      <div class="res-card-body">${r.content}</div>
+    </div>`).join('');
+}
+
+function toggleRes(i) {
+  document.getElementById('res-'+i).classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════════════════════
+function startFlashcards() {
+  fcCards = shuffle(Q.filter(q=>q.s===currentSection));
+  fcIdx = 0; fcFlipped = false;
+  showScreen('screen-flashcard');
+  renderFC();
+}
+
+function renderFC() {
+  const c = fcCards[fcIdx];
+  fcFlipped = false;
+  document.getElementById('fc-inner').classList.remove('flipped');
+  document.getElementById('fc-q').textContent = c.q;
+  document.getElementById('fc-a').textContent = c.o[c.a];
+  document.getElementById('fc-exp').textContent = c.e||'';
+  document.getElementById('fc-cur').textContent = fcIdx+1;
+  document.getElementById('fc-tot').textContent = fcCards.length;
+  document.getElementById('fc-sec-name').textContent = SECTION_INFO[c.s].short;
+  document.getElementById('fc-bar').style.width = ((fcIdx+1)/fcCards.length*100)+'%';
+  document.getElementById('fc-prev').disabled = fcIdx===0;
+  document.getElementById('fc-next').textContent = fcIdx===fcCards.length-1 ? 'Done ✓':'Next →';
+}
+
+function flipCard() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-inner').classList.toggle('flipped',fcFlipped);
+}
+function fcNext() {
+  if(fcIdx<fcCards.length-1){ fcIdx++; renderFC(); }
+  else showScreen('screen-section');
+}
+function fcPrev() { if(fcIdx>0){ fcIdx--; renderFC(); } }
+function fcShuffle() { fcCards=shuffle(fcCards); fcIdx=0; renderFC(); }
+
+// ═══════════════════════════════════════════════════════════
+// EXAM SETUP & LAUNCH
+// ═══════════════════════════════════════════════════════════
+function showExamSetup() {
+  examSecs_arr = [0,1,2,3];
+  document.querySelectorAll('#setup-toggles .toggle-row').forEach(r=>r.classList.add('on'));
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>b.classList.toggle('on',i===0));
+  examQCount=25;
+  showScreen('screen-exam-setup');
+}
+
+function selQCount(btn,n) {
+  document.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); examQCount=n;
+}
+
+function toggleSec(row) {
+  row.classList.toggle('on');
+  const idx=parseInt(row.dataset.sec);
+  if(row.classList.contains('on')){ if(!examSecs_arr.includes(idx)) examSecs_arr.push(idx); }
+  else { examSecs_arr=examSecs_arr.filter(i=>i!==idx); }
+}
+
+function launchCustomExam() {
+  if(examSecs_arr.length===0){ alert('Select at least one section.'); return; }
+  const pool = Q.filter(q=>examSecs_arr.includes(q.s));
+  const count = Math.min(examQCount, pool.length);
+  setupExam(shuffle(pool).slice(0,count), 90*60);
+}
+
+function startSectionExam() {
+  const pool = Q.filter(q=>q.s===currentSection);
+  setupExam(shuffle(pool).slice(0,25), 45*60);
+}
+
+function startSimulatedExam() {
+  // 25 Qs per section = 100 total — mirrors real ESCO exam format
+  const qs = [0,1,2,3].flatMap(s=>shuffle(Q.filter(q=>q.s===s)).slice(0,25));
+  setupExam(shuffle(qs), 90*60);
+}
+
+function startFullExam() {
+  setupExam(shuffle([...Q]), 150*60);
+}
+
+function setupExam(qs, secs) {
+  examQs=qs; examAnswers=new Array(qs.length).fill(-1);
+  examIdx=0; examSecs=secs;
+  showScreen('screen-exam');
+  renderExamQ();
+  startTimer();
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXAM RENDER
+// ═══════════════════════════════════════════════════════════
+function renderExamQ() {
+  const q=examQs[examIdx], tot=examQs.length;
+  document.getElementById('ex-cur').textContent=examIdx+1;
+  document.getElementById('ex-tot').textContent=tot;
+  document.getElementById('ex-qnum').textContent=`Question ${examIdx+1} of ${tot}`;
+  document.getElementById('ex-bar').style.width=((examIdx+1)/tot*100)+'%';
+  const si=SECTION_INFO[q.s];
+  const tag=document.getElementById('ex-sec-tag');
+  tag.textContent=si.short; tag.className=`q-section-tag tag ${si.tag}`;
+  document.getElementById('ex-q').textContent=q.q;
+  const opts=document.getElementById('ex-opts');
+  opts.innerHTML='';
+  const letters=['A','B','C','D'];
+  q.o.forEach((opt,i)=>{
+    const d=document.createElement('div');
+    d.className='opt';
+    const answered=examAnswers[examIdx]!==-1;
+    if(answered){
+      if(i===q.a) d.classList.add('correct');
+      else if(i===examAnswers[examIdx]) d.classList.add('wrong');
+    }else if(examAnswers[examIdx]===i) d.classList.add('selected');
+    d.innerHTML=`<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt}</span>`;
+    if(!answered) d.onclick=()=>selectAnswer(i);
+    opts.appendChild(d);
+  });
+  const exp=document.getElementById('ex-exp');
+  if(examAnswers[examIdx]!==-1){ exp.textContent=q.e||''; exp.classList.add('show'); }
+  else{ exp.classList.remove('show'); exp.textContent=''; }
+  document.getElementById('ex-prev-btn').disabled=examIdx===0;
+  const nb=document.getElementById('ex-next-btn');
+  if(examIdx===examQs.length-1){ nb.textContent='Finish Exam'; nb.onclick=finishExam; }
+  else{ nb.textContent='Next →'; nb.onclick=exNext; }
+}
+
+function selectAnswer(i) { examAnswers[examIdx]=i; renderExamQ(); }
+function exNext() { if(examIdx<examQs.length-1){ examIdx++; renderExamQ(); } }
+function exPrev() { if(examIdx>0){ examIdx--; renderExamQ(); } }
+
+// ═══════════════════════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════════════════════
+function startTimer() {
+  stopTimer();
+  updateTimerDisplay();
+  examTimer=setInterval(()=>{ examSecs--; updateTimerDisplay(); if(examSecs<=0){stopTimer();finishExam();} },1000);
+}
+function stopTimer() { if(examTimer){clearInterval(examTimer);examTimer=null;} }
+function updateTimerDisplay() {
+  const m=Math.floor(examSecs/60), s=examSecs%60;
+  const el=document.getElementById('ex-timer');
+  el.textContent=m+':'+String(s).padStart(2,'0');
+  el.classList.toggle('urgent',examSecs<300);
+}
+
+// ═══════════════════════════════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════════════════════════════
+function finishExam() {
+  stopTimer();
+  const tot=examQs.length;
+  let correct=0;
+  const sd={};
+  [0,1,2,3].forEach(i=>sd[i]={name:SECTION_INFO[i].short,tag:SECTION_INFO[i].tag,correct:0,total:0});
+  examQs.forEach((q,i)=>{
+    if(examAnswers[i]===q.a) correct++;
+    sd[q.s].total++;
+    if(examAnswers[i]===q.a) sd[q.s].correct++;
+  });
+  const pct=Math.round(correct/tot*100);
+  const passed=pct>=70;
+  const ring=document.getElementById('res-ring');
+  ring.className='score-ring '+(passed?'pass':'fail');
+  document.getElementById('res-pct').textContent=pct+'%';
+  document.getElementById('res-verdict').textContent=passed?'Great work!':'Keep studying';
+  const chip=document.getElementById('res-chip');
+  chip.textContent=passed?'✓ Passed — 70% or above':'✗ Below passing — need 70%';
+  chip.className='pass-chip '+(passed?'pass':'fail');
+  document.getElementById('res-meta').textContent=`${correct} of ${tot} correct · ${tot-correct} missed`;
+  const bd=document.getElementById('res-breakdown');
+  bd.innerHTML=Object.values(sd).filter(s=>s.total>0).map(s=>{
+    const p=s.total?Math.round(s.correct/s.total*100):0;
+    const c=p>=70?'var(--green)':p>=50?'var(--gold)':'var(--red)';
+    return `<div class="breakdown-row">
+      <div class="bd-top"><span class="bd-name">${s.name}</span><span class="bd-score" style="color:${c}">${s.correct}/${s.total} (${p}%)</span></div>
+      <div class="bd-bar-bg"><div class="bd-bar" style="width:${p}%;background:${c}"></div></div>
+    </div>`;
+  }).join('');
+  const missed=examQs.map((q,i)=>({q,i,ans:examAnswers[i]})).filter(({q,ans})=>ans!==-1&&ans!==q.a);
+  document.getElementById('res-missed-hdr').style.display=missed.length?'block':'none';
+  document.getElementById('res-missed').innerHTML=missed.slice(0,20).map(({q,ans})=>`
+    <div class="missed-item">
+      <div class="missed-q">${q.q}</div>
+      <div class="missed-yours">✗ Your answer: ${q.o[ans]}</div>
+      <div class="missed-correct">✓ Correct: ${q.o[q.a]}</div>
+    </div>`).join('')+(missed.length>20?`<div style="text-align:center;color:var(--text3);padding:12px;font-size:13px">+ ${missed.length-20} more missed</div>`:'');
+  showScreen('screen-results');
+}
+
+function retakeExam() {
+  examAnswers=new Array(examQs.length).fill(-1);
+  examQs=shuffle(examQs); examIdx=0; examSecs=90*60;
+  showScreen('screen-exam');
+  renderExamQ(); startTimer();
+}
+
+// ═══════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════
+function shuffle(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+window.onload = init;
+</script>
+
+</body>
+</html>
